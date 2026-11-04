@@ -1,0 +1,157 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Admin {
+  id           String        @id @default(cuid())
+  name         String
+  email        String        @unique
+  passwordHash String
+  createdAt    DateTime      @default(now())
+  rates        DailyRate[]
+  rateHistory  RateHistory[]
+}
+
+model Product {
+  id               String        @id @default(cuid())
+  slug             String        @unique
+  name             String
+  gradeLabel       String
+  description      String
+  nutSize          String
+  imagePath        String
+  packImagePath    String
+  galleryPaths     String        @default("[]")
+  sortOrder        Int           @default(0)
+  isActive         Boolean       @default(true)
+  sampleAvailable  Boolean       @default(true)
+  bulkAvailable    Boolean       @default(true)
+  sample250Paise   Int?
+  sample500Paise   Int?
+  sample1000Paise  Int?
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+  rate             DailyRate?
+  rateHistory      RateHistory[]
+  orderItems       OrderItem[]
+}
+
+model DailyRate {
+  id             String   @id @default(cuid())
+  productId      String   @unique
+  product        Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  ratePerKgPaise Int?
+  bulkPackPaise  Int?
+  published      Boolean  @default(true)
+  effectiveDate  String?
+  note           String?
+  updatedById    String?
+  updatedBy      Admin?   @relation(fields: [updatedById], references: [id])
+  updatedAt      DateTime @updatedAt
+}
+
+model RateHistory {
+  id              String   @id @default(cuid())
+  productId       String
+  product         Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  ratePerKgPaise  Int?
+  bulkPackPaise   Int?
+  published       Boolean  @default(true)
+  sample250Paise  Int?
+  sample500Paise  Int?
+  sample1000Paise Int?
+  effectiveDate   String?
+  note            String?
+  recordedAt      DateTime @default(now())
+  updatedById     String?
+  updatedBy       Admin?   @relation(fields: [updatedById], references: [id])
+}
+
+model Customer {
+  id        String   @id @default(cuid())
+  name      String
+  mobile    String
+  whatsapp  String
+  email     String?
+  createdAt DateTime @default(now())
+  orders    Order[]
+}
+
+model Order {
+  id                  String          @id @default(cuid())
+  orderNumber         String          @unique
+  customerId          String
+  customer            Customer        @relation(fields: [customerId], references: [id])
+  orderType           String
+  status              String
+  addressLine         String
+  state               String
+  district            String
+  city                String
+  pinCode             String
+  deliveryChargePaise Int?
+  deliveryNote        String?
+  subtotalPaise       Int
+  totalPaise          Int
+  trackingNumber      String?
+  transportInfo       String?
+  internalNotes       String?
+  createdAt           DateTime        @default(now())
+  updatedAt           DateTime        @updatedAt
+  items               OrderItem[]
+  events              DispatchEvent[]
+}
+
+model OrderItem {
+  id             String  @id @default(cuid())
+  orderId        String
+  order          Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId      String?
+  product        Product? @relation(fields: [productId], references: [id], onDelete: SetNull)
+  productName    String
+  gradeLabel     String
+  orderType      String
+  sampleWeightG  Int?
+  quantity       Int
+  weightGrams    Int
+  unitPricePaise Int
+  lineTotalPaise Int
+}
+
+model DispatchEvent {
+  id        String   @id @default(cuid())
+  orderId   String
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  status    String
+  note      String?
+  createdAt DateTime @default(now())
+}
+
+model PinCode {
+  id              String   @id @default(cuid())
+  code            String   @unique
+  area            String
+  district        String
+  state           String
+  deliveryEnabled Boolean  @default(false)
+  verified        Boolean  @default(false)
+  chargePaise     Int?
+  estimateNote    String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model Setting {
+  key   String @id
+  value String
+}
+
+model OrderSequence {
+  year Int @id
+  last Int
+}
