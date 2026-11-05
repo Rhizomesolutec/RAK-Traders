@@ -1,9 +1,9 @@
 import { Suspense } from "react";
-import { prisma } from "@/lib/db";
+import { listPins } from "@/lib/store";
 import { PinEditor } from "@/components/admin/PinEditor";
 
 async function Pins() {
-  const pins = await prisma.pinCode.findMany({ orderBy: { code: "asc" } });
+  const pins = await listPins();
   return (
     <div className="grid gap-4">
       <PinEditor />

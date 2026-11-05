@@ -27,7 +27,7 @@ export function AddSampleButton({
           slug: product.slug,
           name: product.name,
           gradeLabel: product.gradeLabel,
-          imagePath: COMPANY.samplePackImage,
+          imagePath: COMPANY.samplePouchImages[grams === 500 ? 1 : 0],
           orderType: "SAMPLE",
           sampleWeightG: grams,
           quantity: 1,

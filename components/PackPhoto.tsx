@@ -1,18 +1,25 @@
 import Image from "next/image";
 
-const sampleGrades = new Set(["moti", "vachras", "moro"]);
+const cutPhotos: Record<string, string> = {
+  moti: "/images/products/moti/cut.jpg",
+  vachras: "/images/products/vachras/cut.jpg",
+  moro: "/images/products/mora/cut.jpg",
+  jam: "/images/products/jam/cut.jpg",
+  jeeni: "/images/products/jeeni/cut.jpg",
+  fattor: "/images/products/fattor/cut.jpg",
+};
 
 export function samplePhoto(slug: string) {
-  return sampleGrades.has(slug) ? `/images/products/${slug}/cut.jpg` : null;
+  return cutPhotos[slug] ?? null;
 }
 
-export function PackPhoto({ src, slug, alt }: { src: string; slug: string; alt: string }) {
-  const sample = samplePhoto(slug);
+export function PackPhoto({ src, slug, alt, back }: { src: string; slug: string; alt: string; back?: string }) {
+  const sample = back || samplePhoto(slug);
   return (
-    <div className="pack-photo relative h-72 w-full">
+    <div className="pack-photo relative mx-auto h-[min(78vw,28rem)] w-full max-w-sm bg-black">
       <div className="pack-flip">
         <div className="pack-face">
-          <Image src={src} alt={alt} fill className="object-cover" sizes="320px" />
+          <Image src={src} alt={alt} fill className="object-contain object-center" sizes="(max-width: 640px) 90vw, 384px" />
         </div>
         {sample ? (
           <div className="pack-face pack-face-back">

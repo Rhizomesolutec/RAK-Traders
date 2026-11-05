@@ -4,7 +4,19 @@ import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { prisma } from "@/lib/db";
+import {
+  deletePinById,
+  deleteProductById,
+  findAdminByEmail,
+  findOrderById,
+  insertProduct,
+  listProducts,
+  savePin as savePinRecord,
+  saveProductRates,
+  saveSetting,
+  updateOrderRecord,
+  updateProduct,
+} from "@/lib/store";
 import { getCurrentAdmin } from "@/lib/auth";
 import { clearSessionCookie, setSessionCookie } from "@/lib/session";
 import { verifyPassword } from "@/lib/password";
@@ -28,7 +40,7 @@ function clean(value: FormDataEntryValue | null): string {
 export async function loginAdmin(_prev: { error?: string }, formData: FormData): Promise<{ error?: string }> {
   const email = clean(formData.get("email")).toLowerCase();
   const password = clean(formData.get("password"));
-  const admin = await prisma.admin.findUnique({ where: { email } });
+  const admin = await findAdminByEmail(email);
   if (!admin || !verifyPassword(password, admin.passwordHash)) {
     return { error: "The email or password is not correct." };
   }
@@ -93,10 +105,9 @@ export async function saveProduct(_prev: FormState, formData: FormData): Promise
       sample1000Paise: optionalPaise(clean(formData.get("sample1000"))),
     };
     if (id) {
-      await prisma.product.update({ where: { id }, data });
+      await updateProduct(id, data);
     } else {
-      const created = await prisma.product.create({ data });
-      await prisma.dailyRate.create({ data: { productId: created.id } });
+      await insertProduct(data);
     }
     revalidatePath("/");
     revalidatePath("/products");
@@ -116,7 +127,7 @@ function optionalPaise(value: string): number | null {
 export async function deleteProduct(formData: FormData) {
   await adminOrThrow();
   const id = clean(formData.get("id"));
-  if (id) await prisma.product.delete({ where: { id } });
+  if (id) await deleteProductById(id);
   revalidatePath("/admin/products");
   revalidatePath("/products");
 }
@@ -124,52 +135,31 @@ export async function deleteProduct(formData: FormData) {
 export async function saveRates(_prev: FormState, formData: FormData): Promise<FormState> {
   try {
     const admin = await adminOrThrow();
-    const products = await prisma.product.findMany({ orderBy: { sortOrder: "asc" } });
+    const products = await listProducts();
     const effectiveDate = clean(formData.get("effectiveDate")) || kolkataDateKey();
     if (!/^\d{4}-\d{2}-\d{2}$/.test(effectiveDate)) return { error: "Enter a valid date." };
     const note = clean(formData.get("note")) || null;
 
-    await prisma.$transaction(async (tx) => {
-      for (const product of products) {
+    await saveProductRates(
+      admin.id,
+      effectiveDate,
+      note,
+      products.map((product) => {
         const rateRaw = clean(formData.get(`rate-${product.id}`));
         const packRaw = clean(formData.get(`pack-${product.id}`));
-        const ratePerKgPaise = rateRaw ? rupeesToPaise(rateRaw) : null;
-        const bulkPackPaise = packRaw ? rupeesToPaise(packRaw) : null;
-        const published = formData.get(`publish-${product.id}`) === "on";
-        const sample250Paise = optionalPaise(clean(formData.get(`s250-${product.id}`)));
-        const sample500Paise = optionalPaise(clean(formData.get(`s500-${product.id}`)));
-        const sample1000Paise = optionalPaise(clean(formData.get(`s1000-${product.id}`)));
-        await tx.product.update({
-          where: { id: product.id },
-          data: {
-            sample250Paise,
-            sample500Paise,
-            sample1000Paise,
-            sampleAvailable: formData.get(`sample-${product.id}`) === "on",
-            bulkAvailable: formData.get(`bulk-${product.id}`) === "on",
-          },
-        });
-        await tx.dailyRate.upsert({
-          where: { productId: product.id },
-          create: { productId: product.id, ratePerKgPaise, bulkPackPaise, published, effectiveDate, note, updatedById: admin.id },
-          update: { ratePerKgPaise, bulkPackPaise, published, effectiveDate, note, updatedById: admin.id },
-        });
-        await tx.rateHistory.create({
-          data: {
-            productId: product.id,
-            ratePerKgPaise,
-            bulkPackPaise,
-            published,
-            sample250Paise,
-            sample500Paise,
-            sample1000Paise,
-            effectiveDate,
-            note,
-            updatedById: admin.id,
-          },
-        });
-      }
-    });
+        return {
+          id: product.id,
+          ratePerKgPaise: rateRaw ? rupeesToPaise(rateRaw) : null,
+          bulkPackPaise: packRaw ? rupeesToPaise(packRaw) : null,
+          published: formData.get(`publish-${product.id}`) === "on",
+          sample250Paise: optionalPaise(clean(formData.get(`s250-${product.id}`))),
+          sample500Paise: optionalPaise(clean(formData.get(`s500-${product.id}`))),
+          sample1000Paise: optionalPaise(clean(formData.get(`s1000-${product.id}`))),
+          sampleAvailable: formData.get(`sample-${product.id}`) === "on",
+          bulkAvailable: formData.get(`bulk-${product.id}`) === "on",
+        };
+      }),
+    );
 
     revalidatePath("/");
     revalidatePath("/products");
@@ -190,15 +180,13 @@ export async function updateOrder(formData: FormData) {
   const transportInfo = clean(formData.get("transportInfo")) || null;
   const internalNotes = clean(formData.get("internalNotes")) || null;
   const note = clean(formData.get("note")) || null;
-  const existing = await prisma.order.findUnique({ where: { id } });
+  const existing = await findOrderById(id);
   if (!existing) return;
-  await prisma.order.update({
-    where: { id },
-    data: { status, trackingNumber, transportInfo, internalNotes },
-  });
-  if (existing.status !== status || note) {
-    await prisma.dispatchEvent.create({ data: { orderId: id, status, note } });
-  }
+  await updateOrderRecord(
+    id,
+    { status, trackingNumber, transportInfo, internalNotes },
+    existing.status !== status || note ? { status, note } : undefined,
+  );
   revalidatePath("/admin/orders");
   revalidatePath(`/admin/orders/${id}`);
   revalidatePath("/admin/dispatch");
@@ -225,8 +213,7 @@ export async function savePin(_prev: FormState, formData: FormData): Promise<For
       chargePaise: optionalPaise(clean(formData.get("charge"))),
       estimateNote: clean(formData.get("estimateNote")) || null,
     };
-    if (id) await prisma.pinCode.update({ where: { id }, data });
-    else await prisma.pinCode.create({ data });
+    await savePinRecord(id || null, data);
     revalidatePath("/admin/pincodes");
     return { ok: true };
   } catch (error) {
@@ -237,7 +224,7 @@ export async function savePin(_prev: FormState, formData: FormData): Promise<For
 export async function deletePin(formData: FormData) {
   await adminOrThrow();
   const id = clean(formData.get("id"));
-  if (id) await prisma.pinCode.delete({ where: { id } });
+  if (id) await deletePinById(id);
   revalidatePath("/admin/pincodes");
 }
 
@@ -246,11 +233,7 @@ export async function saveSettings(_prev: FormState, formData: FormData): Promis
     await adminOrThrow();
     const entries = ["companyName", "address", "whatsappNumber", "supportEmail", "supportNote", "deliveryNote"];
     for (const key of entries) {
-      await prisma.setting.upsert({
-        where: { key },
-        create: { key, value: clean(formData.get(key)) },
-        update: { value: clean(formData.get(key)) },
-      });
+      await saveSetting(key, clean(formData.get(key)));
     }
     revalidatePath("/");
     revalidatePath("/contact");

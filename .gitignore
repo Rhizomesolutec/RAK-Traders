@@ -34,9 +34,7 @@ yarn-error.log*
 .env*
 !.env.example
 
-# local database and uploaded product images
-/prisma/*.db
-/prisma/*.db-journal
+# uploaded product images
 /public/uploads/*
 !/public/uploads/.gitkeep
 

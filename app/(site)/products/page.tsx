@@ -6,7 +6,7 @@ import { getPublicProducts } from "@/lib/catalog";
 
 export const metadata: Metadata = {
   title: "Our Arecanut Grades",
-  description: "Wholesale MOTI, VACHRAS, and MORO arecanut grades from RAK TRADERS, with sample packs and 65 kg bags.",
+  description: "Wholesale MOTI, VACHRAS, MORO, JAM, JEENI, and FATTOR arecanut grades from RAK TRADERS, with sample packs and 65 kg bags.",
 };
 
 const grades = [
@@ -14,6 +14,9 @@ const grades = [
   { href: "/products?grade=moti", label: "MOTI", slug: "moti" },
   { href: "/products?grade=vachras", label: "VACHRAS", slug: "vachras" },
   { href: "/products?grade=moro", label: "MORO", slug: "moro" },
+  { href: "/products?grade=jam", label: "JAM", slug: "jam" },
+  { href: "/products?grade=jeeni", label: "JEENI", slug: "jeeni" },
+  { href: "/products?grade=fattor", label: "FATTOR", slug: "fattor" },
 ];
 
 async function Catalog({ searchParams }: { searchParams: Promise<{ q?: string; grade?: string }> }) {

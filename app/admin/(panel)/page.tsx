@@ -1,18 +1,14 @@
 import { Suspense } from "react";
 import Link from "next/link";
-import { prisma } from "@/lib/db";
+import { listOrders, orderCounts } from "@/lib/store";
 import { formatDateTime } from "@/lib/dates";
 import { formatInr } from "@/lib/money";
 import { STATUS_LABELS, type OrderStatus } from "@/lib/company";
 
 async function Dashboard() {
-  const [total, sample, bulk, pending, dispatched, recent] = await Promise.all([
-    prisma.order.count(),
-    prisma.order.count({ where: { orderType: "SAMPLE" } }),
-    prisma.order.count({ where: { orderType: "BULK" } }),
-    prisma.order.count({ where: { status: { in: ["RECEIVED", "CONFIRMED", "PROCESSING"] } } }),
-    prisma.order.count({ where: { status: { in: ["DISPATCHED", "IN_TRANSIT", "OUT_FOR_DELIVERY"] } } }),
-    prisma.order.findMany({ orderBy: { createdAt: "desc" }, take: 6, include: { customer: true } }),
+  const [{ total, sample, bulk, pending, dispatched }, recent] = await Promise.all([
+    orderCounts(),
+    listOrders({ limit: 6 }),
   ]);
   const cards = [
     ["Total orders", total],

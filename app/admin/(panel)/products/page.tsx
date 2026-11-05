@@ -1,9 +1,9 @@
 import { Suspense } from "react";
-import { prisma } from "@/lib/db";
+import { listProducts } from "@/lib/store";
 import { ProductEditor } from "@/components/admin/ProductEditor";
 
 async function Products() {
-  const products = await prisma.product.findMany({ orderBy: { sortOrder: "asc" } });
+  const products = await listProducts();
   return (
     <div className="grid gap-5">
       <ProductEditor />

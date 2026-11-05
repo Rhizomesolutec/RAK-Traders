@@ -30,9 +30,11 @@ export function SampleOrderSelector({ products }: { products: PublicProduct[] })
       {visible.flatMap((product) =>
         weights.map((grams) => {
           const price = priceFor(product, grams);
+          const pouch = COMPANY.samplePouchImages[grams === 500 ? 1 : 0];
+          const otherPouch = COMPANY.samplePouchImages[grams === 500 ? 0 : 1];
           return (
             <article key={`${product.id}-${grams}`} className="flex flex-col overflow-hidden rounded-lg border border-[#e4e7ec] bg-white">
-              <PackPhoto src={COMPANY.samplePackImage} slug={product.slug} alt={`${product.name} ${weightLabel(grams)} pack`} />
+              <PackPhoto src={pouch} back={otherPouch} slug={product.slug} alt={`${product.name} ${weightLabel(grams)} sample pack`} />
               <div className="flex flex-1 flex-col gap-1 p-3">
                 <p className="text-sm text-muted">{product.gradeLabel}</p>
                 <h3 className="text-base font-semibold">{product.name}</h3>

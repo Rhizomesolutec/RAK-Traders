@@ -8,8 +8,9 @@ export const COMPANY = {
     "Ponnani, Malappuram, Kerala, India.",
   ],
   bulkKg: 65,
-  packImage: "/images/products/rak-65kg-pack.jpg",
-  samplePackImage: "/images/products/rak-1kg-square.jpg",
+  packImage: "/images/products/moti/Cutout_Moti.png",
+  samplePackImage: "/images/sample/CHIPS CUT MOCKUP.png",
+  samplePouchImages: ["/images/sample/CHIPS CUT MOCKUP.png", "/images/sample/SALLI CUT MOCKUP 2.png"],
   sampleWeights: [250, 500, 1000] as const,
 } as const;
 

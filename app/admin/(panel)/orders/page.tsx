@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { Suspense } from "react";
-import type { Prisma } from "@prisma/client";
-import { prisma } from "@/lib/db";
+import { listOrders } from "@/lib/store";
 import { ORDER_STATUSES, STATUS_LABELS, type OrderStatus } from "@/lib/company";
 import { formatDateTime } from "@/lib/dates";
 import { formatInr } from "@/lib/money";
@@ -9,19 +8,10 @@ import { formatInr } from "@/lib/money";
 async function Orders({ searchParams }: { searchParams: Promise<{ q?: string; type?: string; status?: string }> }) {
   const params = await searchParams;
   const q = (params.q ?? "").trim();
-  const where: Prisma.OrderWhereInput = {};
-  if (params.type === "SAMPLE" || params.type === "BULK" || params.type === "MIXED") where.orderType = params.type;
-  if (params.status && ORDER_STATUSES.includes(params.status as OrderStatus)) where.status = params.status;
-  if (q) {
-    where.OR = [
-      { orderNumber: { contains: q.toUpperCase() } },
-      { customer: { mobile: { contains: q } } },
-    ];
-  }
-  const orders = await prisma.order.findMany({
-    where,
-    include: { customer: true },
-    orderBy: { createdAt: "desc" },
+  const orders = await listOrders({
+    q,
+    type: params.type === "SAMPLE" || params.type === "BULK" || params.type === "MIXED" ? params.type : undefined,
+    status: params.status && ORDER_STATUSES.includes(params.status as OrderStatus) ? params.status : undefined,
   });
   return (
     <>

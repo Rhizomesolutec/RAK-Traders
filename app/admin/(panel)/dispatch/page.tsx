@@ -1,15 +1,11 @@
 import Link from "next/link";
 import { Suspense } from "react";
-import { prisma } from "@/lib/db";
+import { listOrders } from "@/lib/store";
 import { STATUS_LABELS, type OrderStatus } from "@/lib/company";
 import { formatDateTime } from "@/lib/dates";
 
 async function DispatchList() {
-  const orders = await prisma.order.findMany({
-    where: { status: { notIn: ["DELIVERED", "CANCELLED"] } },
-    include: { customer: true },
-    orderBy: { updatedAt: "desc" },
-  });
+  const orders = await listOrders({ openOnly: true });
   if (orders.length === 0) return <p className="panel p-5">No open orders to dispatch.</p>;
   return (
     <ul className="panel divide-y divide-sand">

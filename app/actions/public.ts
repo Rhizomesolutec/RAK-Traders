@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { prisma } from "@/lib/db";
+import { findOrderForTracking, findPinByCode, insertOrder, nextOrderNumber } from "@/lib/store";
 import { getPublicProducts } from "@/lib/catalog";
 import { cartOrderType, priceCart } from "@/lib/orders";
 import { formatWeight } from "@/lib/weight";
@@ -19,7 +19,7 @@ export async function checkPin(code: string): Promise<PinCheckResult> {
   const pin = code.trim();
   if (!isValidPin(pin)) return { status: "invalid", message: INVALID_PIN };
 
-  const row = await prisma.pinCode.findUnique({ where: { code: pin } });
+  const row = await findPinByCode(pin);
   if (!row || !row.deliveryEnabled || !row.verified) {
     return { status: "confirm", message: UNAVAILABLE };
   }
@@ -70,7 +70,7 @@ export async function placeOrder(input: CheckoutInput): Promise<CheckoutResult> 
   }
 
   const subtotalPaise = priced.lines.reduce((sum, line) => sum + line.lineTotalPaise, 0);
-  const pin = await prisma.pinCode.findUnique({ where: { code: input.pinCode.trim() } });
+  const pin = await findPinByCode(input.pinCode.trim());
   const deliveryKnown = Boolean(pin?.deliveryEnabled && pin.verified);
   const deliveryChargePaise = deliveryKnown ? pin?.chargePaise ?? null : null;
   const totalPaise = subtotalPaise + (deliveryChargePaise ?? 0);
@@ -79,52 +79,45 @@ export async function placeOrder(input: CheckoutInput): Promise<CheckoutResult> 
     new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Kolkata", year: "numeric" }).format(new Date()),
   );
 
-  const order = await prisma.$transaction(async (tx) => {
-    const sequence = await tx.orderSequence.upsert({
-      where: { year },
-      create: { year, last: 1 },
-      update: { last: { increment: 1 } },
-    });
-    const orderNumber = `RAK-${year}-${String(sequence.last).padStart(5, "0")}`;
-    const customer = await tx.customer.create({
-      data: {
-        name: input.name.trim(),
-        mobile: input.mobile.trim(),
-        whatsapp: input.whatsapp.trim(),
-        email: input.email.trim() || null,
-      },
-    });
-    return tx.order.create({
-      data: {
-        orderNumber,
-        customerId: customer.id,
-        orderType,
-        status: "RECEIVED",
-        addressLine: input.addressLine.trim(),
-        state: input.state,
-        district: input.district.trim(),
-        city: input.city.trim(),
-        pinCode: input.pinCode.trim(),
-        deliveryChargePaise,
-        deliveryNote: deliveryChargePaise == null ? "Delivery charge to be confirmed." : null,
-        subtotalPaise,
-        totalPaise,
-        items: {
-          create: priced.lines.map((line) => ({
-            productId: line.product.id,
-            productName: line.product.name,
-            gradeLabel: line.product.gradeLabel,
-            orderType: line.item.orderType,
-            sampleWeightG: line.item.sampleWeightG,
-            quantity: line.item.quantity,
-            weightGrams: line.weightGrams,
-            unitPricePaise: line.unitPricePaise,
-            lineTotalPaise: line.lineTotalPaise,
-          })),
-        },
-        events: { create: { status: "RECEIVED", note: "Order received from the website." } },
-      },
-    });
+  const orderNumber = await nextOrderNumber(year);
+  const now = new Date();
+  const order = await insertOrder({
+    orderNumber,
+    customer: {
+      name: input.name.trim(),
+      mobile: input.mobile.trim(),
+      whatsapp: input.whatsapp.trim(),
+      email: input.email.trim() || null,
+    },
+    orderType,
+    status: "RECEIVED",
+    addressLine: input.addressLine.trim(),
+    state: input.state,
+    district: input.district.trim(),
+    city: input.city.trim(),
+    pinCode: input.pinCode.trim(),
+    deliveryChargePaise,
+    deliveryNote: deliveryChargePaise == null ? "Delivery charge to be confirmed." : null,
+    subtotalPaise,
+    totalPaise,
+    trackingNumber: null,
+    transportInfo: null,
+    internalNotes: null,
+    createdAt: now,
+    updatedAt: now,
+    items: priced.lines.map((line) => ({
+      id: crypto.randomUUID(),
+      productId: line.product.id,
+      productName: line.product.name,
+      gradeLabel: line.product.gradeLabel,
+      orderType: line.item.orderType,
+      sampleWeightG: line.item.sampleWeightG,
+      quantity: line.item.quantity,
+      weightGrams: line.weightGrams,
+      unitPricePaise: line.unitPricePaise,
+      lineTotalPaise: line.lineTotalPaise,
+    })),
+    events: [{ id: crypto.randomUUID(), status: "RECEIVED", note: "Order received from the website.", createdAt: now }],
   });
 
   revalidatePath("/admin");
@@ -155,10 +148,7 @@ export async function trackOrder(orderNumber: string, mobile: string): Promise<T
     return { ok: false, message: "Order not found. Please check your order number and mobile number." };
   }
 
-  const order = await prisma.order.findFirst({
-    where: { orderNumber: number, customer: { mobile: phone } },
-    include: { items: true, events: { orderBy: { createdAt: "asc" } } },
-  });
+  const order = await findOrderForTracking(number, phone);
   if (!order || !ORDER_STATUSES.includes(order.status as OrderStatus)) {
     return { ok: false, message: "Order not found. Please check your order number and mobile number." };
   }

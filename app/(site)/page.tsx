@@ -44,13 +44,13 @@ async function HomeCatalog() {
 export default function HomePage() {
   return (
     <>
-      <section className="relative isolate flex min-h-[calc(100svh-7.25rem)] flex-col overflow-hidden lg:flex-row">
+      <section className="relative isolate flex min-h-[calc(100svh-7.25rem)] flex-col overflow-hidden lg:h-[calc(100svh-7.25rem)] lg:flex-row">
         <Image
-          src="/images/products/rak-65kg-pack.jpg"
+          src="/images/products/moti/Cutout_Moti.png"
           alt=""
           fill
           priority
-          className="object-cover"
+          className="object-contain object-center scale-[0.82]"
           sizes="100vw"
         />
         <div className="absolute inset-0 bg-[#1f2933]/60" />
@@ -70,15 +70,15 @@ export default function HomePage() {
             <a href="#samples" className="btn border border-white bg-white text-[#1f2933]">Try a sample</a>
           </div>
         </div>
-        <div className="relative z-10 flex min-h-80 flex-1 items-center justify-center px-4 pb-6 lg:w-1/2 lg:px-8 lg:pb-0">
-          <div className="relative h-[min(70vh,680px)] w-full max-w-lg">
+        <div className="relative z-10 flex min-h-80 flex-1 items-center justify-center px-4 pb-6 lg:min-h-0 lg:w-1/2 lg:px-10 lg:py-8">
+          <div className="relative h-[min(52vh,520px)] w-full max-w-lg lg:h-full lg:max-h-full">
             <Image
-              src="/images/products/rak-65kg-pack.jpg"
-              alt="Closed RAK TRADERS 65 kg arecanut pack"
+              src="/images/products/moti/Cutout_Moti.png"
+              alt="Closed RAK TRADERS Moti 65 kg pack"
               fill
               priority
-              className="object-contain"
-              sizes="(max-width: 1024px) 90vw, 40vw"
+              className="object-contain object-center scale-[0.86]"
+              sizes="(max-width: 1024px) 90vw, 50vw"
             />
           </div>
         </div>

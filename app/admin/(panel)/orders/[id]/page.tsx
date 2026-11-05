@@ -3,17 +3,14 @@ import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { updateOrder } from "@/app/actions/admin";
 import { ORDER_STATUSES, STATUS_LABELS, type OrderStatus } from "@/lib/company";
-import { prisma } from "@/lib/db";
+import { findOrderById } from "@/lib/store";
 import { formatDateTime } from "@/lib/dates";
 import { formatInr } from "@/lib/money";
 import { formatWeight } from "@/lib/weight";
 
 async function OrderDetail({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const order = await prisma.order.findUnique({
-    where: { id },
-    include: { customer: true, items: true, events: { orderBy: { createdAt: "desc" } } },
-  });
+  const order = await findOrderById(id);
   if (!order) notFound();
   return (
     <div className="grid gap-5 lg:grid-cols-[1.1fr_0.9fr]">

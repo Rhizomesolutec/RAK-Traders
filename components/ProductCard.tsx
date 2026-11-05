@@ -8,12 +8,10 @@ import type { PublicProduct } from "@/lib/types";
 const closedPack = "/images/products/rak-65kg-pack.jpg";
 
 export function ProductCard({ product }: { product: PublicProduct }) {
-  const samples = [
-    product.sample250Paise != null ? `250 g ${formatInr(product.sample250Paise)}` : "250 g",
-    product.sample500Paise != null ? `500 g ${formatInr(product.sample500Paise)}` : "500 g",
-    product.sample1000Paise != null ? `1 kg ${formatInr(product.sample1000Paise)}` : "1 kg",
-  ];
   const image = product.packImagePath || closedPack;
+  const rate = product.todayRatePerKgPaise;
+  const pack25 = rate == null ? null : rate * 25;
+  const pack65 = product.todayBulkPackPaise;
 
   return (
     <article className="flex h-full flex-col overflow-hidden rounded-lg border border-[#e4e7ec] bg-white">
@@ -23,15 +21,12 @@ export function ProductCard({ product }: { product: PublicProduct }) {
           <p className="text-sm text-muted">{product.gradeLabel}</p>
           <h3 className="text-lg font-semibold">{product.name}</h3>
         </div>
-        {product.todayBulkPackPaise != null && product.todayRatePerKgPaise != null ? (
-          <div>
-            <p className="text-base font-semibold text-forest">{formatInr(product.todayRatePerKgPaise)} / KG</p>
-            <p className="text-sm text-muted">{formatInr(product.todayBulkPackPaise)} / 65 kg</p>
-          </div>
-        ) : (
-          <p className="text-sm text-muted">Price not set</p>
-        )}
-        <p className="text-sm text-muted">Samples: {product.sampleAvailable ? samples.join(" · ") : "Not available"}</p>
+        <div className="text-sm">
+          <p>25 kg · {pack25 == null ? <span className="text-muted">Price not set</span> : <span className="font-semibold text-forest">{formatInr(pack25)}</span>}</p>
+          <p className="mt-1">
+            65 kg · {pack65 == null ? <span className="text-muted">Price not set</span> : <span className="font-semibold text-forest">{formatInr(pack65)}</span>}
+          </p>
+        </div>
         <div className="mt-auto flex flex-col gap-2 sm:flex-row">
           <Link href={`/products/${product.slug}`} className="btn btn-secondary flex-1">View Details</Link>
           <AddBulkButton product={product} label="Order Now" />

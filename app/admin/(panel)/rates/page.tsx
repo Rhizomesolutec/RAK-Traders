@@ -1,14 +1,11 @@
 import { Suspense } from "react";
-import { prisma } from "@/lib/db";
+import { listProducts } from "@/lib/store";
 import { formatDateTime } from "@/lib/dates";
 import { formatInr } from "@/lib/money";
 import { RateEditor } from "@/components/admin/RateEditor";
 
 async function Rates() {
-  const products = await prisma.product.findMany({
-    orderBy: { sortOrder: "asc" },
-    include: { rate: { include: { updatedBy: true } }, rateHistory: { orderBy: { recordedAt: "desc" }, take: 5, include: { updatedBy: true } } },
-  });
+  const products = await listProducts({ withHistory: true });
   return (
     <>
       <RateEditor
