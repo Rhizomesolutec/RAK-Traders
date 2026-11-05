@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
 import { deleteProduct, saveProduct } from "@/app/actions/admin";
 import { paiseToRupeeInput } from "@/lib/money";
 
@@ -36,9 +36,35 @@ type ProductForm = {
 
 export function ProductEditor({ product }: { product?: ProductForm }) {
   const [state, action, pending] = useActionState(saveProduct, {});
+  const savedImage = product?.packImagePath || product?.imagePath || "";
+  const [preview, setPreview] = useState(savedImage);
+
+  function chooseImage(event: React.ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0];
+    if (!file) {
+      setPreview(savedImage);
+      return;
+    }
+    setPreview(URL.createObjectURL(file));
+  }
+
   return (
     <form action={action} className="panel grid gap-3 p-4">
       {product?.id ? <input type="hidden" name="id" value={product.id} /> : null}
+      <div className="grid gap-3 sm:grid-cols-[9rem_1fr] sm:items-center">
+        <div className="flex h-36 w-full items-center justify-center overflow-hidden rounded-lg border border-[#e4e7ec] bg-[#f7f8fa] sm:w-36">
+          {preview ? (
+            <img src={preview} alt={product?.name ? `${product.name} preview` : "Selected product image"} className="h-full w-full object-contain" />
+          ) : (
+            <p className="px-2 text-center text-sm text-muted">No image yet</p>
+          )}
+        </div>
+        <label className="field">
+          <span>{product ? "Replace image from this device" : "Add image from this device"}</span>
+          <input name="image" type="file" accept="image/png,image/jpeg,image/webp" onChange={chooseImage} />
+          <p className="text-sm font-normal text-muted">JPG, PNG, or WEBP, up to 4 MB. The picture appears here before you save.</p>
+        </label>
+      </div>
       <div className="grid gap-3 md:grid-cols-3">
         <label className="field"><span>Name</span><input name="name" defaultValue={product?.name ?? ""} required /></label>
         <label className="field"><span>Slug</span><input name="slug" defaultValue={product?.slug ?? ""} required /></label>
@@ -51,7 +77,6 @@ export function ProductEditor({ product }: { product?: ProductForm }) {
         <label className="field"><span>65 kg pack image</span><input name="packImagePath" defaultValue={product?.packImagePath ?? ""} /></label>
       </div>
       <label className="field"><span>Gallery paths, one per line</span><textarea name="galleryPaths" defaultValue={galleryLines(product?.galleryPaths)} /></label>
-      <label className="field"><span>Upload a replacement image</span><input name="image" type="file" accept="image/png,image/jpeg,image/webp" /></label>
       <div className="grid gap-3 md:grid-cols-4">
         <label className="field"><span>Sort</span><input name="sortOrder" defaultValue={product?.sortOrder ?? 0} /></label>
         <label className="field"><span>250 g sample ₹</span><input name="sample250" defaultValue={paiseToRupeeInput(product?.sample250Paise)} /></label>

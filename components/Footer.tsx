@@ -10,7 +10,7 @@ const links = [
   { href: "/contact", label: "Contact Us" },
 ];
 
-export function Footer({ whatsappNumber }: { whatsappNumber: string }) {
+export function Footer({ whatsappNumber, year }: { whatsappNumber: string; year: number }) {
   return (
     <footer className="mt-auto border-t border-[#e4e7ec] bg-[#f7f8fa] text-ink">
       <div className="section-wrap grid gap-10 py-14 md:grid-cols-[1.4fr_1fr]">
@@ -37,7 +37,7 @@ export function Footer({ whatsappNumber }: { whatsappNumber: string }) {
         </div>
       </div>
       <div className="border-t border-[#e6e6e6]">
-        <p className="section-wrap py-4 text-sm text-muted">© {new Date().getFullYear()} {COMPANY.legalName}</p>
+        <p className="section-wrap py-4 text-sm text-muted">© {year} {COMPANY.legalName}</p>
       </div>
     </footer>
   );

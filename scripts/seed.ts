@@ -5,7 +5,7 @@ import { closeDb } from "../lib/db";
 import { kolkataDateKey } from "../lib/dates";
 import { VERIFIED_PONNANI_PINS } from "../lib/data/pincodes";
 import { hashPassword } from "../lib/password";
-import { createAdmin, ensureSetting, fillMissingPrices, findAdminByEmail, renameProductSlug, upsertCatalogProduct, upsertPin } from "../lib/store";
+import { createAdmin, ensureSetting, fillMissingPrices, findAdminByEmail, renameProductSlug, updateAdminPassword, upsertCatalogProduct, upsertPin } from "../lib/store";
 
 function loadEnv() {
   const text = readFileSync(resolve(process.cwd(), ".env"), "utf8");
@@ -137,11 +137,13 @@ async function main() {
   const password = process.env.ADMIN_PASSWORD;
   if (email && password) {
     const existing = await findAdminByEmail(email);
+    const passwordHash = hashPassword(password);
     if (!existing) {
-      await createAdmin({ name: "RAK TRADERS Admin", email, passwordHash: hashPassword(password) });
+      await createAdmin({ name: "RAK TRADERS Admin", email, passwordHash });
       console.log(`Admin created for ${email}`);
     } else {
-      console.log(`Admin already exists for ${email}`);
+      await updateAdminPassword(email, passwordHash);
+      console.log(`Admin password updated for ${email}`);
     }
   } else {
     console.log("ADMIN_EMAIL and ADMIN_PASSWORD were not set, so no admin was created.");

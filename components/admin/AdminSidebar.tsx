@@ -11,7 +11,6 @@ const links = [
   { href: "/admin/orders", label: "Orders" },
   { href: "/admin/dispatch", label: "Dispatch Tracking" },
   { href: "/admin/pincodes", label: "PIN Codes" },
-  { href: "/admin/settings", label: "Settings" },
 ];
 
 export function AdminSidebar({ name }: { name: string }) {
@@ -32,6 +31,9 @@ export function AdminSidebar({ name }: { name: string }) {
             </Link>
           );
         })}
+        <Link href="/" className="rounded-lg border border-white/30 px-3 py-3 text-center text-base whitespace-nowrap hover:bg-white/10">
+          View site
+        </Link>
         <form action={logoutAdmin}>
           <button className="w-full rounded-lg px-3 py-3 text-left text-base hover:bg-white/10" type="submit">Logout</button>
         </form>

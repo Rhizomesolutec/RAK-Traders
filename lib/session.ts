@@ -43,6 +43,8 @@ export function readSessionToken(token: string | undefined | null): SessionPaylo
 }
 
 export async function getSession(): Promise<SessionPayload | null> {
+  const { connection } = await import("next/server");
+  await connection();
   const jar = await cookies();
   return readSessionToken(jar.get(SESSION_COOKIE)?.value);
 }

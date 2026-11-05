@@ -1,9 +1,11 @@
 import { Suspense } from "react";
+import { connection } from "next/server";
 import { redirect } from "next/navigation";
 import { AdminSidebar } from "@/components/admin/AdminSidebar";
 import { getCurrentAdmin } from "@/lib/auth";
 
 async function AdminShell({ children }: { children: React.ReactNode }) {
+  await connection();
   const admin = await getCurrentAdmin();
   if (!admin) redirect("/admin/login");
   return (

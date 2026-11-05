@@ -34,7 +34,7 @@ async function SiteFooter() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      <Footer whatsappNumber={settings.whatsappNumber} />
+      <Footer whatsappNumber={settings.whatsappNumber} year={new Date().getFullYear()} />
       <WhatsAppButton number={settings.whatsappNumber} floating />
     </>
   );

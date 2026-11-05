@@ -129,6 +129,10 @@ export type OrderView = Omit<OrderRecord, never> & { id: string };
 export type PinView = Omit<PinRecord, "createdAt" | "updatedAt"> & { id: string };
 
 async function collections() {
+  if (process.env.NEXT_RUNTIME) {
+    const { connection } = await import("next/server");
+    await connection();
+  }
   const db = await getDb();
   return {
     admins: db.collection<AdminRecord>("admins"),
@@ -227,6 +231,11 @@ export async function findAdminById(id: string): Promise<AdminView | null> {
 export async function createAdmin(input: { name: string; email: string; passwordHash: string }) {
   const { admins } = await collections();
   await admins.insertOne({ ...input, createdAt: new Date() });
+}
+
+export async function updateAdminPassword(email: string, passwordHash: string) {
+  const { admins } = await collections();
+  await admins.updateOne({ email }, { $set: { passwordHash } });
 }
 
 export async function listProducts(options?: { activeOnly?: boolean; withHistory?: boolean }) {

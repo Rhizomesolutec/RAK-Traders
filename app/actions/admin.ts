@@ -13,7 +13,6 @@ import {
   listProducts,
   savePin as savePinRecord,
   saveProductRates,
-  saveSetting,
   updateOrderRecord,
   updateProduct,
 } from "@/lib/store";
@@ -87,14 +86,15 @@ export async function saveProduct(_prev: FormState, formData: FormData): Promise
       return { error: "Name, slug, grade, and description are required." };
     }
     const uploaded = await saveUpload(formData.get("image"));
+    const picture = uploaded || imagePath || packImagePath || "/images/products/moti/Cutout_Moti.png";
     const data = {
       name,
       slug,
       gradeLabel,
       description,
       nutSize,
-      imagePath: uploaded || imagePath || "/images/products/moti/sack.jpg",
-      packImagePath: packImagePath || imagePath || "/images/products/moti/sack.jpg",
+      imagePath: picture,
+      packImagePath: packImagePath && !uploaded ? packImagePath : picture,
       galleryPaths,
       sortOrder: Number(clean(formData.get("sortOrder")) || "0") || 0,
       isActive: formData.get("isActive") === "on",
@@ -226,20 +226,4 @@ export async function deletePin(formData: FormData) {
   const id = clean(formData.get("id"));
   if (id) await deletePinById(id);
   revalidatePath("/admin/pincodes");
-}
-
-export async function saveSettings(_prev: FormState, formData: FormData): Promise<FormState> {
-  try {
-    await adminOrThrow();
-    const entries = ["companyName", "address", "whatsappNumber", "supportEmail", "supportNote", "deliveryNote"];
-    for (const key of entries) {
-      await saveSetting(key, clean(formData.get(key)));
-    }
-    revalidatePath("/");
-    revalidatePath("/contact");
-    revalidatePath("/admin/settings");
-    return { ok: true };
-  } catch (error) {
-    return { error: error instanceof Error ? error.message : "Settings could not be saved." };
-  }
 }
