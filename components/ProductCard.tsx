@@ -14,7 +14,7 @@ export function ProductCard({ product }: { product: PublicProduct }) {
   const pack65 = product.todayBulkPackPaise;
 
   return (
-    <article className="flex h-full flex-col overflow-hidden rounded-lg border border-[#e4e7ec] bg-white">
+    <article className="flex h-full flex-col overflow-hidden rounded-lg border border-[#e4e7ec] bg-white shadow-[0_10px_28px_rgba(31,41,51,0.12)]">
       <PackPhoto src={image} slug={product.slug} alt={`${product.name} closed 65 kg pack`} />
       <div className="flex flex-1 flex-col gap-2 p-3">
         <div>

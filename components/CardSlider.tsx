@@ -14,7 +14,7 @@ function scrollCards(element: HTMLDivElement | null, direction: number) {
   element.scrollBy({ left: direction * distance, behavior: "smooth" });
 }
 
-export function CardSlider({ children, label, auto = false }: { children: React.ReactNode; label: string; auto?: boolean }) {
+export function CardSlider({ children, label, auto = true, compact = false }: { children: React.ReactNode; label: string; auto?: boolean; compact?: boolean }) {
   const scroller = useRef<HTMLDivElement>(null);
   const paused = useRef(false);
 
@@ -30,14 +30,14 @@ export function CardSlider({ children, label, auto = false }: { children: React.
   return (
     <div onMouseEnter={() => { paused.current = true; }} onMouseLeave={() => { paused.current = false; }}>
       <div className="mb-3 flex justify-end gap-2">
-        <button className="btn btn-secondary" type="button" onClick={() => scrollCards(scroller.current, -1)} aria-label={`Previous ${label}`}>
-          Previous
+        <button className="grid h-9 w-9 place-items-center rounded-full border border-[#e4e7ec] bg-white text-xl leading-none" type="button" onClick={() => scrollCards(scroller.current, -1)} aria-label={`Previous ${label}`}>
+          ‹
         </button>
-        <button className="btn btn-primary" type="button" onClick={() => scrollCards(scroller.current, 1)} aria-label={`Next ${label}`}>
-          Next
+        <button className="grid h-9 w-9 place-items-center rounded-full bg-[#c2410c] text-xl leading-none text-white" type="button" onClick={() => scrollCards(scroller.current, 1)} aria-label={`Next ${label}`}>
+          ›
         </button>
       </div>
-      <div ref={scroller} className="card-slider" aria-label={label}>
+      <div ref={scroller} className={compact ? "card-slider card-slider-compact" : "card-slider"} aria-label={label}>
         {children}
       </div>
     </div>

@@ -298,12 +298,35 @@ li {
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
-  padding-bottom: 0.25rem;
+  padding: 0.5rem 0.15rem 1.25rem;
 }
 
 .card-slider > * {
-  flex: 0 0 min(86vw, 320px);
+  flex: 0 0 min(74vw, 260px);
   scroll-snap-align: start;
+}
+
+@media (min-width: 1024px) {
+  .card-slider > * {
+    flex-basis: 320px;
+  }
+}
+
+.card-slider-compact > * {
+  flex-basis: min(42vw, 168px);
+}
+
+@media (min-width: 1024px) {
+  .card-slider-compact > * {
+    flex-basis: 176px;
+  }
+}
+
+.pack-photo-compact .sample-badge {
+  bottom: 0.35rem;
+  left: 0.35rem;
+  height: 2.5rem;
+  width: 2.5rem;
 }
 
 @media (prefers-reduced-motion: reduce) {

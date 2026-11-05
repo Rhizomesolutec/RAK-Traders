@@ -13,10 +13,10 @@ export function samplePhoto(slug: string) {
   return cutPhotos[slug] ?? null;
 }
 
-export function PackPhoto({ src, slug, alt, back }: { src: string; slug: string; alt: string; back?: string }) {
+export function PackPhoto({ src, slug, alt, back, compact = false }: { src: string; slug: string; alt: string; back?: string; compact?: boolean }) {
   const sample = back || samplePhoto(slug);
   return (
-    <div className="pack-photo relative mx-auto h-[min(78vw,28rem)] w-full max-w-sm">
+    <div className={compact ? "pack-photo pack-photo-compact relative mx-auto h-36 w-full" : "pack-photo relative mx-auto h-64 w-full max-w-sm sm:h-72 lg:h-96"}>
       <div className="pack-flip">
         <div className="pack-face">
           <Image src={src} alt={alt} fill className="object-contain object-center" sizes="(max-width: 640px) 90vw, 384px" />

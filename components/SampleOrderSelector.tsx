@@ -26,24 +26,24 @@ export function SampleOrderSelector({ products }: { products: PublicProduct[] })
   }
 
   return (
-    <CardSlider label="Sample packs" auto>
+    <CardSlider label="Sample packs" auto compact>
       {visible.flatMap((product) =>
         weights.map((grams) => {
           const price = priceFor(product, grams);
           const pouch = COMPANY.samplePouchImages[grams === 500 ? 1 : 0];
           const otherPouch = COMPANY.samplePouchImages[grams === 500 ? 0 : 1];
           return (
-            <article key={`${product.id}-${grams}`} className="flex flex-col overflow-hidden rounded-lg border border-[#e4e7ec] bg-white">
-              <PackPhoto src={pouch} back={otherPouch} slug={product.slug} alt={`${product.name} ${weightLabel(grams)} sample pack`} />
-              <div className="flex flex-1 flex-col gap-1 p-3">
-                <p className="text-sm text-muted">{product.gradeLabel}</p>
-                <h3 className="text-base font-semibold">{product.name}</h3>
-                <p className="text-sm">{weightLabel(grams)}</p>
+            <article key={`${product.id}-${grams}`} className="flex flex-col overflow-hidden rounded-lg border border-[#e4e7ec] bg-white shadow-[0_10px_28px_rgba(31,41,51,0.12)]">
+              <PackPhoto compact src={pouch} back={otherPouch} slug={product.slug} alt={`${product.name} ${weightLabel(grams)} sample pack`} />
+              <div className="flex flex-1 flex-col gap-0.5 p-2.5">
+                <p className="text-xs text-muted">{product.gradeLabel}</p>
+                <h3 className="text-sm font-semibold">{product.name}</h3>
+                <p className="text-xs">{weightLabel(grams)}</p>
                 {price == null ? (
                   <p className="mt-auto pt-2 text-sm text-muted">Price not set</p>
                 ) : (
                   <>
-                    <p className="text-lg font-semibold text-forest">{formatInr(price)}</p>
+                    <p className="text-sm font-semibold text-forest">{formatInr(price)}</p>
                     <div className="mt-auto pt-2">
                       <AddSampleButton product={product} grams={grams} pricePaise={price} />
                     </div>

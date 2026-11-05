@@ -44,42 +44,30 @@ async function HomeCatalog() {
 export default function HomePage() {
   return (
     <>
-      <section className="relative isolate flex min-h-[calc(100svh-7.25rem)] flex-col overflow-hidden lg:h-[calc(100svh-7.25rem)] lg:flex-row">
+      <section className="relative isolate flex min-h-[28rem] flex-col justify-center overflow-hidden lg:h-[calc(100svh-7.25rem)] lg:min-h-[calc(100svh-7.25rem)]">
         <Image
           src="/images/products/moti/Cutout_Moti.png"
-          alt=""
+          alt="Closed RAK TRADERS Moti 65 kg pack"
           fill
           priority
           className="object-contain object-center scale-[0.82]"
           sizes="100vw"
         />
         <div className="absolute inset-0 bg-[#1f2933]/60" />
-        <div className="section-wrap relative z-10 flex flex-col justify-center py-8 text-white lg:w-1/2 lg:py-12">
+        <div className="section-wrap relative z-10 flex flex-col justify-center py-8 text-white lg:py-12">
           <p className="text-sm font-semibold tracking-wide uppercase">{COMPANY.legalName}</p>
-          <h1 className="mt-3 max-w-xl text-4xl leading-tight font-semibold md:text-6xl">{COMPANY.tagline}</h1>
-          <p className="mt-4 max-w-xl text-lg leading-8">
+          <h1 className="mt-2 max-w-xl text-3xl leading-tight font-semibold lg:mt-3 lg:text-6xl">{COMPANY.tagline}</h1>
+          <p className="mt-3 max-w-xl text-base leading-7 lg:mt-4 lg:text-lg lg:leading-8">
             Your trusted wholesale arecanut supplier from Kerala. Explore premium supari grades, check transparent daily prices, and order samples or bulk quantities with delivery across India.
           </p>
-          <ul className="mt-5 flex flex-wrap gap-2">
+          <ul className="mt-4 flex flex-wrap gap-2 lg:mt-5">
             {trust.map((item) => (
               <li key={item} className="rounded-full bg-white/15 px-3 py-1 text-sm">{item}</li>
             ))}
           </ul>
-          <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+          <div className="mt-5 flex flex-wrap gap-3 lg:mt-6">
             <a href="#bulk-orders" className="btn btn-primary">Order a 65 kg bag</a>
             <a href="#samples" className="btn border border-white bg-white text-[#1f2933]">Try a sample</a>
-          </div>
-        </div>
-        <div className="relative z-10 flex min-h-80 flex-1 items-center justify-center px-4 pb-6 lg:min-h-0 lg:w-1/2 lg:px-10 lg:py-8">
-          <div className="relative h-[min(52vh,520px)] w-full max-w-lg lg:h-full lg:max-h-full">
-            <Image
-              src="/images/products/moti/Cutout_Moti.png"
-              alt="Closed RAK TRADERS Moti 65 kg pack"
-              fill
-              priority
-              className="object-contain object-center scale-[0.86]"
-              sizes="(max-width: 1024px) 90vw, 50vw"
-            />
           </div>
         </div>
       </section>
