@@ -302,7 +302,7 @@ li {
 }
 
 .card-slider > * {
-  flex: 0 0 min(74vw, 260px);
+  flex: 0 0 min(58vw, 200px);
   scroll-snap-align: start;
 }
 

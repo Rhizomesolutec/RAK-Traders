@@ -39,20 +39,22 @@ async function HomeCatalog() {
 export default function HomePage() {
   return (
     <>
-      <section className="relative isolate h-[calc(100svh-7.25rem)] overflow-hidden lg:h-[68vh] lg:max-h-[36rem] lg:min-h-[22rem]">
-        <Image
-          src="/images/hero/plantation.jpg"
-          alt="Arecanut palms with fruit in a grove"
-          fill
-          priority
-          unoptimized
-          className="object-cover object-center"
-          sizes="100vw"
-        />
-        <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-[#1f2933]/70 to-transparent" />
-        <div className="section-wrap absolute inset-x-0 bottom-0 z-10 pb-5 text-white sm:pb-7">
-          <p className="text-xs font-medium tracking-[0.18em] uppercase">{COMPANY.brand}</p>
-          <h1 className="mt-1 text-xl font-medium sm:text-2xl">{COMPANY.tagline}</h1>
+      <section className="px-3 pt-3 pb-1 sm:px-4 sm:pt-4">
+        <div className="relative isolate h-[calc(100svh-8.75rem)] overflow-hidden rounded-2xl shadow-[0_12px_32px_rgba(31,41,51,0.16)] lg:h-[68vh] lg:max-h-[36rem] lg:min-h-[22rem]">
+          <Image
+            src="/images/hero/plantation.jpg"
+            alt="Arecanut palms with fruit in a grove"
+            fill
+            priority
+            unoptimized
+            className="object-cover object-center"
+            sizes="100vw"
+          />
+          <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-[#1f2933]/70 to-transparent" />
+          <div className="section-wrap absolute inset-x-0 bottom-0 z-10 pb-5 text-white sm:pb-7">
+            <p className="text-xs font-medium tracking-[0.18em] uppercase">{COMPANY.brand}</p>
+            <h1 className="mt-1 text-xl font-medium sm:text-2xl">{COMPANY.tagline}</h1>
+          </div>
         </div>
       </section>
       <Suspense fallback={<p className="section-wrap py-10 text-lg">Loading grades and rates…</p>}>

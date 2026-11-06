@@ -16,7 +16,7 @@ export function samplePhoto(slug: string) {
 export function PackPhoto({ src, slug, alt, back, compact = false }: { src: string; slug: string; alt: string; back?: string; compact?: boolean }) {
   const sample = back || samplePhoto(slug);
   return (
-    <div className={compact ? "pack-photo pack-photo-compact relative mx-auto h-36 w-full" : "pack-photo relative mx-auto h-64 w-full max-w-sm sm:h-72 lg:h-96"}>
+    <div className={compact ? "pack-photo pack-photo-compact relative mx-auto h-36 w-full" : "pack-photo relative mx-auto h-44 w-full max-w-sm sm:h-56 lg:h-96"}>
       <div className="pack-flip">
         <div className="pack-face">
           <Image src={src} alt={alt} fill className="object-contain object-center" sizes="(max-width: 640px) 90vw, 384px" />
