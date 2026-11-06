@@ -6,11 +6,6 @@ import { RateStrip } from "@/components/RateStrip";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { getPublicProducts, getSettings } from "@/lib/catalog";
 
-async function SiteHeader() {
-  const settings = await getSettings();
-  return <Header whatsappNumber={settings.whatsappNumber} />;
-}
-
 async function SiteRates() {
   const products = await getPublicProducts();
   return <RateStrip products={products} />;
@@ -45,9 +40,7 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
     <CartProvider>
       <div className="flex min-h-full w-full min-w-0 max-w-full flex-col">
         <div className="sticky top-0 z-30">
-          <Suspense fallback={<div className="h-16 border-b border-[#e4e7ec] bg-white" />}>
-            <SiteHeader />
-          </Suspense>
+          <Header />
           <Suspense fallback={<div className="h-12 bg-[#1f2933]" />}>
             <SiteRates />
           </Suspense>
