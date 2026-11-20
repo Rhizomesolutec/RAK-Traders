@@ -1,14 +1,8 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-});
-
 const description =
-  "RAK TRADERS INTERNATIONAL supplies wholesale arecanut from Ponnani, Kerala. Compare MOTI, VACHRAS, and MORO grades, sample packs, and 65 kg bulk rates.";
+  "RAK TRADERS INTERNATIONAL supplies wholesale arecanut from Ponnani, Kerala since 1980. Compare MOTI, VACHRAS, MORO, JAM, JEENI, and FATTOR grades, sample packs, and 65 kg bulk rates.";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
 
@@ -28,16 +22,26 @@ export const metadata: Metadata = {
     type: "website",
     siteName: "RAK TRADERS",
     ...(siteUrl
-      ? { images: [{ url: "/images/hero/plantation.jpg", alt: "Arecanut plantation" }] }
+      ? { images: [{ url: "/images/hero/hero-luxury.jpg", alt: "RAK TRADERS premium graded arecanuts" }] }
       : {}),
   },
-  icons: { icon: "/images/logo/logo.png" },
+  icons: { icon: "/images/logo/logo-transparent.png" },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${inter.variable} h-full antialiased`}>
-      <body className="min-h-full bg-white text-ink">{children}</body>
+    <html lang="en" className="h-full scroll-smooth antialiased">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+          rel="stylesheet"
+        />
+      </head>
+      <body className="min-h-full bg-[#faf8f5] text-ink selection:bg-[#c9a24b]/25 selection:text-ink">
+        {children}
+      </body>
     </html>
   );
 }

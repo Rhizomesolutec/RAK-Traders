@@ -45,11 +45,12 @@ async function Catalog({ searchParams }: { searchParams: Promise<{ q?: string; g
 
 export default function ProductsPage({ searchParams }: { searchParams: Promise<{ q?: string; grade?: string }> }) {
   return (
-    <section className="section-wrap py-10">
-      <h1 className="text-3xl font-semibold text-forest">Our Arecanut Grades</h1>
-      <p className="mt-3 max-w-2xl text-lg leading-8">Choose from our carefully selected arecanut grades for your wholesale requirements.</p>
+    <section className="section-wrap py-12 sm:py-16">
+      <p className="text-xs font-semibold tracking-[0.2em] text-[#9a7332] uppercase">Curated Collection</p>
+      <h1 className="font-display mt-2 text-3xl font-semibold text-ink sm:text-4xl">Our Arecanut Grades</h1>
+      <p className="mt-3 max-w-2xl text-base leading-relaxed text-muted sm:text-lg">Choose from our carefully selected arecanut grades for your wholesale requirements.</p>
       <div className="mt-8">
-        <Suspense fallback={<p>Loading products…</p>}>
+        <Suspense fallback={<p className="text-muted">Loading products…</p>}>
           <Catalog searchParams={searchParams} />
         </Suspense>
       </div>

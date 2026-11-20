@@ -1,23 +1,29 @@
 import Image from "next/image";
 import Link from "next/link";
 
-export function Logo({ size = 48, dark = false }: { size?: number; dark?: boolean }) {
+export function Logo({
+  size = 68,
+  className = "",
+}: {
+  size?: number;
+  dark?: boolean;
+  className?: string;
+}) {
   return (
-    <Link href="/" className="flex items-center gap-3">
+    <Link
+      href="/"
+      aria-label="RAK TRADERS Home"
+      className={`inline-flex shrink-0 items-center transition-transform duration-300 hover:scale-105 ${className}`}
+    >
       <Image
-        src="/images/logo/logo.png"
+        src="/images/logo/logo-transparent.png"
         alt="RAK TRADERS"
         width={size}
         height={size}
-        className={dark ? "rounded-lg" : "rounded-lg bg-forest-deep"}
+        className="object-contain drop-shadow-[0_2px_10px_rgba(201,162,75,0.22)]"
+        style={{ width: size, height: size }}
         priority
       />
-      <span className="min-w-0 leading-tight">
-        <span className={`block text-sm font-semibold tracking-wide sm:text-base ${dark ? "text-white" : "text-forest"}`}>
-          RAK TRADERS
-        </span>
-        <span className={`hidden text-sm xl:block ${dark ? "text-sand" : "text-muted"}`}>Premium Quality Arecanut</span>
-      </span>
     </Link>
   );
 }

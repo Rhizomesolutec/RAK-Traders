@@ -22,7 +22,11 @@ function weightLabel(grams: SampleWeight) {
 export function SampleOrderSelector({ products }: { products: PublicProduct[] }) {
   const visible = products.filter((product) => product.sampleAvailable);
   if (visible.length === 0) {
-    return <p className="text-base">Sample orders are not open right now.</p>;
+    return (
+      <div className="panel p-8 text-center">
+        <p className="text-base text-muted">Sample orders are not open right now.</p>
+      </div>
+    );
   }
 
   return (
@@ -33,18 +37,35 @@ export function SampleOrderSelector({ products }: { products: PublicProduct[] })
           const pouch = COMPANY.samplePouchImages[grams === 500 ? 1 : 0];
           const otherPouch = COMPANY.samplePouchImages[grams === 500 ? 0 : 1];
           return (
-            <article key={`${product.id}-${grams}`} className="flex flex-col overflow-hidden rounded-lg border border-[#e4e7ec] bg-white shadow-[0_10px_28px_rgba(31,41,51,0.12)]">
-              <PackPhoto compact src={pouch} back={otherPouch} slug={product.slug} alt={`${product.name} ${weightLabel(grams)} sample pack`} />
-              <div className="flex flex-1 flex-col gap-0.5 p-2.5">
-                <p className="text-xs text-muted">{product.gradeLabel}</p>
-                <h3 className="text-sm font-semibold">{product.name}</h3>
-                <p className="text-xs">{weightLabel(grams)}</p>
+            <article
+              key={`${product.id}-${grams}`}
+              className="premium-card group flex h-full flex-col overflow-hidden"
+            >
+              <PackPhoto
+                compact
+                src={pouch}
+                back={otherPouch}
+                slug={product.slug}
+                badge={weightLabel(grams)}
+                alt={`${product.name} ${weightLabel(grams)} sample pack`}
+              />
+              <div className="flex flex-1 flex-col p-4">
+                <p className="text-[10px] font-semibold tracking-[0.14em] text-[#9a7332] uppercase">
+                  {product.gradeLabel}
+                </p>
+                <h3 className="font-display mt-0.5 text-base font-semibold text-ink">
+                  {product.name}
+                </h3>
+                <p className="mt-0.5 text-xs text-muted">Sample Pouch · {weightLabel(grams)}</p>
+
                 {price == null ? (
-                  <p className="mt-auto pt-2 text-sm text-muted">Price not set</p>
+                  <p className="mt-auto pt-4 text-xs text-muted">Price on request</p>
                 ) : (
                   <>
-                    <p className="text-sm font-semibold text-forest">{formatInr(price)}</p>
-                    <div className="mt-auto pt-2">
+                    <p className="mt-3 text-lg font-bold text-forest tabular-nums">
+                      {formatInr(price)}
+                    </p>
+                    <div className="mt-auto pt-3">
                       <AddSampleButton product={product} grams={grams} pricePaise={price} />
                     </div>
                   </>

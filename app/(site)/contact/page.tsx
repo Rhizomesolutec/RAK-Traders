@@ -30,9 +30,10 @@ async function ContactDetails() {
 
 export default function ContactPage() {
   return (
-    <section className="section-wrap py-10">
-      <h1 className="mb-6 text-4xl font-semibold text-forest">Contact</h1>
-      <Suspense fallback={<p>Loading contact details…</p>}>
+    <section className="section-wrap py-12 sm:py-16">
+      <p className="text-xs font-semibold tracking-[0.2em] text-[#9a7332] uppercase">Trade Desk</p>
+      <h1 className="font-display mt-2 mb-8 text-3xl font-semibold text-ink sm:text-4xl">Contact Us</h1>
+      <Suspense fallback={<p className="text-muted">Loading contact details…</p>}>
         <ContactDetails />
       </Suspense>
     </section>

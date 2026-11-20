@@ -28,10 +28,11 @@ async function Rates() {
 
 export default function TodayRatePage() {
   return (
-    <section className="section-wrap py-10">
-      <h1 className="text-3xl font-semibold text-forest">Today&apos;s Arecanut Rates</h1>
-      <p className="mt-3 max-w-2xl text-lg leading-8">Transparent wholesale prices from RAK TRADERS.</p>
-      <Suspense fallback={<p className="mt-6">Loading today’s rates…</p>}>
+    <section className="section-wrap py-12 sm:py-16">
+      <p className="text-xs font-semibold tracking-[0.2em] text-[#9a7332] uppercase">Live Trade Desk</p>
+      <h1 className="font-display mt-2 text-3xl font-semibold text-ink sm:text-4xl">Today&apos;s Arecanut Rates</h1>
+      <p className="mt-3 max-w-2xl text-base leading-relaxed text-muted sm:text-lg">Transparent wholesale prices from RAK TRADERS.</p>
+      <Suspense fallback={<p className="mt-6 text-muted">Loading today’s rates…</p>}>
         <Rates />
       </Suspense>
     </section>

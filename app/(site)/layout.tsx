@@ -41,7 +41,7 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
       <div className="flex min-h-full w-full min-w-0 max-w-full flex-col">
         <div className="sticky top-0 z-30">
           <Header />
-          <Suspense fallback={<div className="h-12 bg-[#1f2933]" />}>
+          <Suspense fallback={<div className="h-11 bg-[#1a1714]" />}>
             <SiteRates />
           </Suspense>
         </div>

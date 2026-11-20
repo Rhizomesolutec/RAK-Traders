@@ -14,14 +14,16 @@ function Offer({ product, hidden = false }: { product: PublicProduct; hidden?: b
       tabIndex={hidden ? -1 : undefined}
     >
       <span className="rate-offer-name">{product.name}</span>
-      <span>{product.gradeLabel}</span>
+      <span className="text-xs text-white/55">{product.gradeLabel}</span>
       {priced ? (
         <>
           <strong>{formatInr(product.todayRatePerKgPaise as number)} / KG</strong>
-          <span>{formatInr(product.todayBulkPackPaise as number)} / 65 kg</span>
+          <span className="text-xs text-white/65 tabular-nums">
+            {formatInr(product.todayBulkPackPaise as number)} / 65 kg
+          </span>
         </>
       ) : (
-        <span>Price not set</span>
+        <span className="text-xs text-white/50">Rate updating</span>
       )}
     </Link>
   );
@@ -30,10 +32,16 @@ function Offer({ product, hidden = false }: { product: PublicProduct; hidden?: b
 export function RateStrip({ products }: { products: PublicProduct[] }) {
   return (
     <div className="rate-strip" aria-label="Today's arecanut rates">
-      <Link href="/today-rate" className="rate-strip-label">Today&apos;s rates</Link>
+      <Link href="/today-rate" className="rate-strip-label">
+        <span className="relative flex h-2 w-2">
+          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#e7c97a] opacity-75" />
+          <span className="relative inline-flex h-2 w-2 rounded-full bg-[#e7c97a]" />
+        </span>
+        Today&apos;s Rates
+      </Link>
       <div className="rate-strip-window">
         {products.length === 0 ? (
-          <p className="px-4 py-3">Rates are not published yet.</p>
+          <p className="px-4 py-2.5 text-sm text-white/70">Rates are being updated.</p>
         ) : (
           <div className="rate-strip-track">
             <div className="rate-strip-group">

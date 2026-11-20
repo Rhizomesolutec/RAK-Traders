@@ -1,36 +1,169 @@
-import Image from "next/image";
+import Link from "next/link";
 import { Suspense } from "react";
+import { ArrowRight, Award, Scale, ShieldCheck } from "lucide-react";
 import { BulkOrderSelector } from "@/components/BulkOrderSelector";
-import { CardSlider } from "@/components/CardSlider";
 import { DeliveryChecker } from "@/components/DeliveryChecker";
+import { HeroSection } from "@/components/HeroSection";
 import { ProductGrid } from "@/components/ProductCard";
+import { Reveal } from "@/components/Reveal";
 import { SampleOrderSelector } from "@/components/SampleOrderSelector";
 import { getPublicProducts, getSettings } from "@/lib/catalog";
-import { COMPANY } from "@/lib/company";
+
+const pillars = [
+  {
+    icon: Award,
+    title: "Precision Hand-Sorting",
+    text: "Every batch is graded for uniform nut size, rich marbled interior, and consistent moisture levels before packing.",
+  },
+  {
+    icon: Scale,
+    title: "Transparent Daily Rates",
+    text: "Live per-kilogram and 65 kg wholesale bag pricing published directly from our Ponnani trade desk.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Sample Before Bulk",
+    text: "Inspect quality firsthand with 250 g, 500 g, or 1 kg sample pouches before committing to full wholesale loads.",
+  },
+];
 
 async function HomeCatalog() {
   const [products, settings] = await Promise.all([getPublicProducts(), getSettings()]);
   return (
     <>
-      <section className="section-wrap border-t border-[#e4e7ec] py-8">
-        <h2 className="text-2xl font-semibold">Our Arecanut Grades</h2>
-        <div className="mt-6">
+      {/* Our Arecanut Grades */}
+      <section className="section-wrap py-16 sm:py-20">
+        <Reveal>
+          <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
+            <div>
+              <p className="text-xs font-semibold tracking-[0.2em] text-[#9a7332] uppercase">
+                Curated Collection
+              </p>
+              <h2 className="font-display mt-2 text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
+                Our Arecanut Grades
+              </h2>
+              <p className="mt-2 max-w-xl text-sm text-muted sm:text-base">
+                Hover the golden preview ring on any pack to inspect the cross-section nut quality.
+              </p>
+            </div>
+            <Link
+              href="/products"
+              className="inline-flex items-center gap-1.5 text-sm font-semibold text-forest transition-colors hover:text-forest-deep"
+            >
+              View All Grades
+              <ArrowRight size={16} />
+            </Link>
+          </div>
+        </Reveal>
+
+        <Reveal delay={100} className="mt-10">
           <ProductGrid products={products} />
-        </div>
+        </Reveal>
       </section>
-      <section id="samples" className="border-t border-[#e4e7ec] bg-[#f7f8fa] py-8">
+
+      {/* Craft & Heritage Pillars */}
+      <section className="border-y border-[#e8e1d7] bg-[#13110f] py-16 text-white sm:py-20">
         <div className="section-wrap">
-          <h2 className="mb-4 text-2xl font-semibold">Try Before You Buy</h2>
-          <SampleOrderSelector products={products} />
+          <Reveal>
+            <div className="mx-auto max-w-2xl text-center">
+              <p className="text-xs font-semibold tracking-[0.22em] text-[#e7c97a] uppercase">
+                The RAK Standard
+              </p>
+              <h2 className="font-display mt-2 text-3xl font-semibold text-white sm:text-4xl">
+                Built on Trust Since 1980
+              </h2>
+            </div>
+          </Reveal>
+
+          <div className="mt-12 grid gap-6 md:grid-cols-3">
+            {pillars.map((item, idx) => {
+              const Icon = item.icon;
+              return (
+                <Reveal key={item.title} delay={idx * 100}>
+                  <div className="h-full rounded-2xl border border-white/10 bg-white/[0.04] p-7 transition-colors duration-300 hover:border-[#c9a24b]/40 hover:bg-white/[0.06]">
+                    <div className="grid h-12 w-12 place-items-center rounded-xl border border-[#c9a24b]/35 bg-[#c9a24b]/12 text-[#e7c97a]">
+                      <Icon size={22} />
+                    </div>
+                    <h3 className="font-display mt-5 text-xl font-semibold text-white">
+                      {item.title}
+                    </h3>
+                    <p className="mt-2.5 text-sm leading-relaxed text-white/65">{item.text}</p>
+                  </div>
+                </Reveal>
+              );
+            })}
+          </div>
         </div>
       </section>
-      <section id="bulk-orders" className="section-wrap border-t border-[#e4e7ec] py-8">
-        <h2 className="mb-6 text-2xl font-semibold">65 kg bulk orders</h2>
-        <CardSlider label="65 kg bags">
-          {products.map((product) => (
-            <BulkOrderSelector key={product.id} product={product} whatsappNumber={settings.whatsappNumber} />
-          ))}
-        </CardSlider>
+
+      {/* Try Before You Buy */}
+      <section id="samples" className="border-b border-[#e8e1d7] bg-[#f4efe7]/70 py-16 sm:py-20">
+        <div className="section-wrap">
+          <Reveal>
+            <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
+              <div>
+                <p className="text-xs font-semibold tracking-[0.2em] text-[#9a7332] uppercase">
+                  Quality First
+                </p>
+                <h2 className="font-display mt-2 text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
+                  Try Before You Buy
+                </h2>
+                <p className="mt-2 max-w-xl text-sm text-muted sm:text-base">
+                  Order sealed 250 g, 500 g, or 1 kg sample pouches to evaluate aroma, cut, and finish before placing bulk orders.
+                </p>
+              </div>
+              <Link
+                href="/sample-orders"
+                className="inline-flex items-center gap-1.5 text-sm font-semibold text-forest transition-colors hover:text-forest-deep"
+              >
+                All Sample Packs
+                <ArrowRight size={16} />
+              </Link>
+            </div>
+          </Reveal>
+
+          <Reveal delay={100} className="mt-6">
+            <SampleOrderSelector products={products} />
+          </Reveal>
+        </div>
+      </section>
+
+      {/* 65 kg Bulk Orders */}
+      <section id="bulk-orders" className="section-wrap py-16 sm:py-20">
+        <Reveal>
+          <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
+            <div>
+              <p className="text-xs font-semibold tracking-[0.2em] text-[#9a7332] uppercase">
+                Wholesale Trade Bags
+              </p>
+              <h2 className="font-display mt-2 text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
+                65 kg Bulk Orders
+              </h2>
+              <p className="mt-2 max-w-xl text-sm text-muted sm:text-base">
+                Select bag quantities for instant wholesale totals, or send a direct WhatsApp inquiry to our trade desk.
+              </p>
+            </div>
+            <Link
+              href="/today-rate"
+              className="inline-flex items-center gap-1.5 text-sm font-semibold text-forest transition-colors hover:text-forest-deep"
+            >
+              Full Rate Sheet
+              <ArrowRight size={16} />
+            </Link>
+          </div>
+        </Reveal>
+
+        <Reveal delay={100} className="mt-10">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {products.map((product) => (
+              <BulkOrderSelector
+                key={product.id}
+                product={product}
+                whatsappNumber={settings.whatsappNumber}
+              />
+            ))}
+          </div>
+        </Reveal>
       </section>
     </>
   );
@@ -39,30 +172,20 @@ async function HomeCatalog() {
 export default function HomePage() {
   return (
     <>
-      <section className="px-3 pt-3 pb-1 sm:px-4 sm:pt-4">
-        <div className="relative isolate h-[calc(100svh-8.75rem)] overflow-hidden rounded-2xl shadow-[0_12px_32px_rgba(31,41,51,0.16)] lg:h-[68vh] lg:max-h-[36rem] lg:min-h-[22rem]">
-          <Image
-            src="/images/hero/plantation.jpg"
-            alt="Arecanut palms with fruit in a grove"
-            fill
-            priority
-            unoptimized
-            className="object-cover object-center"
-            sizes="100vw"
-          />
-          <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-[#1f2933]/70 to-transparent" />
-          <div className="section-wrap absolute inset-x-0 bottom-0 z-10 pb-5 text-white sm:pb-7">
-            <p className="text-xs font-medium tracking-[0.18em] uppercase">{COMPANY.brand}</p>
-            <h1 className="mt-1 text-xl font-medium sm:text-2xl">{COMPANY.tagline}</h1>
+      <HeroSection />
+      <Suspense
+        fallback={
+          <div className="section-wrap py-20 text-center">
+            <p className="text-base text-muted">Loading grades and live rates…</p>
           </div>
-        </div>
-      </section>
-      <Suspense fallback={<p className="section-wrap py-10 text-lg">Loading grades and rates…</p>}>
+        }
+      >
         <HomeCatalog />
       </Suspense>
-      <section className="section-wrap border-t border-[#e4e7ec] py-8">
-        <h2 className="mb-4 text-2xl font-semibold">Delivery</h2>
-        <DeliveryChecker />
+      <section className="section-wrap pb-8">
+        <Reveal>
+          <DeliveryChecker />
+        </Reveal>
       </section>
     </>
   );
