@@ -6,10 +6,10 @@ const globalForMongo = globalThis as unknown as {
 };
 
 function connectionUri() {
-  const uri = process.env.MONGODB_URI?.trim();
-  if (!uri) throw new Error("MONGODB_URI is not set.");
+  const uri = process.env.ConnectionString?.trim() || process.env.MONGODB_URI?.trim();
+  if (!uri) throw new Error("ConnectionString (or MONGODB_URI) is not set.");
   if (!uri.startsWith("mongodb+srv://") && !uri.startsWith("mongodb://")) {
-    throw new Error("MONGODB_URI must start with mongodb+srv:// or mongodb://.");
+    throw new Error("ConnectionString must start with mongodb+srv:// or mongodb://.");
   }
   return uri;
 }
