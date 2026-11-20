@@ -75,11 +75,11 @@ async function HomeCatalog() {
             </div>
           </Reveal>
 
-          <div className="mt-12 grid gap-6 md:grid-cols-3">
+          <div className="mt-12 grid items-stretch gap-6 md:grid-cols-3">
             {pillars.map((item, idx) => {
               const Icon = item.icon;
               return (
-                <Reveal key={item.title} delay={idx * 100}>
+                <Reveal key={item.title} delay={idx * 100} className="h-full">
                   <div className="h-full rounded-2xl border border-white/10 bg-white/[0.04] p-7 transition-colors duration-300 hover:border-[#c9a24b]/40 hover:bg-white/[0.06]">
                     <div className="grid h-12 w-12 place-items-center rounded-xl border border-[#c9a24b]/35 bg-[#c9a24b]/12 text-[#e7c97a]">
                       <Icon size={22} />
@@ -154,7 +154,7 @@ async function HomeCatalog() {
         </Reveal>
 
         <Reveal delay={100} className="mt-10">
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-1 items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {products.map((product) => (
               <BulkOrderSelector
                 key={product.id}

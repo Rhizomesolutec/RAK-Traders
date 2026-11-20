@@ -29,52 +29,62 @@ export function SampleOrderSelector({ products }: { products: PublicProduct[] })
     );
   }
 
-  return (
-    <CardSlider label="Sample packs" auto compact>
-      {visible.flatMap((product) =>
-        weights.map((grams) => {
-          const price = priceFor(product, grams);
-          const pouch = COMPANY.samplePouchImages[grams === 500 ? 1 : 0];
-          const otherPouch = COMPANY.samplePouchImages[grams === 500 ? 0 : 1];
-          return (
-            <article
-              key={`${product.id}-${grams}`}
-              className="premium-card group flex h-full flex-col overflow-hidden"
-            >
-              <PackPhoto
-                compact
-                src={pouch}
-                back={otherPouch}
-                slug={product.slug}
-                badge={weightLabel(grams)}
-                alt={`${product.name} ${weightLabel(grams)} sample pack`}
-              />
-              <div className="flex flex-1 flex-col p-4">
-                <p className="text-[10px] font-semibold tracking-[0.14em] text-[#9a7332] uppercase">
-                  {product.gradeLabel}
-                </p>
-                <h3 className="font-display mt-0.5 text-base font-semibold text-ink">
-                  {product.name}
-                </h3>
-                <p className="mt-0.5 text-xs text-muted">Sample Pouch · {weightLabel(grams)}</p>
+  const cards = visible.flatMap((product) =>
+    weights.map((grams) => {
+      const price = priceFor(product, grams);
+      const pouch = COMPANY.samplePouchImages[grams === 500 ? 1 : 0];
+      const otherPouch = COMPANY.samplePouchImages[grams === 500 ? 0 : 1];
+      return (
+        <article
+          key={`${product.id}-${grams}`}
+          className="premium-card group flex h-full flex-col overflow-hidden"
+        >
+          <PackPhoto
+            compact
+            src={pouch}
+            back={otherPouch}
+            slug={product.slug}
+            badge={weightLabel(grams)}
+            alt={`${product.name} ${weightLabel(grams)} sample pack`}
+          />
+          <div className="flex flex-1 flex-col p-4">
+            <p className="text-[10px] font-semibold tracking-[0.14em] text-[#9a7332] uppercase">
+              {product.gradeLabel}
+            </p>
+            <h3 className="font-display mt-0.5 text-base font-semibold text-ink">
+              {product.name}
+            </h3>
+            <p className="mt-0.5 text-xs text-muted">Sample Pouch · {weightLabel(grams)}</p>
 
-                {price == null ? (
-                  <p className="mt-auto pt-4 text-xs text-muted">Price on request</p>
-                ) : (
-                  <>
-                    <p className="mt-3 text-lg font-bold text-forest tabular-nums">
-                      {formatInr(price)}
-                    </p>
-                    <div className="mt-auto pt-3">
-                      <AddSampleButton product={product} grams={grams} pricePaise={price} />
-                    </div>
-                  </>
-                )}
-              </div>
-            </article>
-          );
-        }),
-      )}
+            {price == null ? (
+              <p className="mt-auto pt-4 text-xs text-muted">Price on request</p>
+            ) : (
+              <>
+                <p className="mt-3 text-lg font-bold text-forest tabular-nums">
+                  {formatInr(price)}
+                </p>
+                <div className="mt-auto pt-3">
+                  <AddSampleButton product={product} grams={grams} pricePaise={price} />
+                </div>
+              </>
+            )}
+          </div>
+        </article>
+      );
+    }),
+  );
+
+  if (cards.length <= 3) {
+    return (
+      <div className="grid grid-cols-1 items-stretch gap-6 sm:grid-cols-3">
+        {cards}
+      </div>
+    );
+  }
+
+  return (
+    <CardSlider label="Sample packs" continuous compact>
+      {cards}
     </CardSlider>
   );
 }

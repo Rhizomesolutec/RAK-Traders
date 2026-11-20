@@ -20,23 +20,38 @@ export function CardSlider({
   label,
   auto = true,
   compact = false,
+  continuous = false,
 }: {
   children: React.ReactNode;
   label: string;
   auto?: boolean;
   compact?: boolean;
+  continuous?: boolean;
 }) {
   const scroller = useRef<HTMLDivElement>(null);
   const paused = useRef(false);
 
   useEffect(() => {
-    if (!auto) return;
+    if (!auto || continuous) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const timer = window.setInterval(() => {
       if (!paused.current) scrollCards(scroller.current, 1);
     }, 3600);
     return () => window.clearInterval(timer);
-  }, [auto]);
+  }, [auto, continuous]);
+
+  if (continuous) {
+    return (
+      <div className="sample-slider-window" role="region" aria-label={label}>
+        <div className="sample-slider-track">
+          <div className="sample-slider-group">{children}</div>
+          <div className="sample-slider-group" aria-hidden="true">
+            {children}
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div

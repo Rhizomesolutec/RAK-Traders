@@ -10,7 +10,7 @@ import { createAdmin, ensureSetting, fillMissingPrices, findAdminByEmail, rename
 function loadEnv() {
   const text = readFileSync(resolve(process.cwd(), ".env"), "utf8");
   for (const line of text.split(/\r?\n/)) {
-    const match = line.match(/^([A-Z0-9_]+)=(.*)$/);
+    const match = line.match(/^([A-Za-z0-9_]+)=(.*)$/);
     if (!match || process.env[match[1]]) continue;
     process.env[match[1]] = match[2].replace(/^"|"$/g, "");
   }
@@ -88,7 +88,7 @@ const products = [
     nutSize: "65 kg wholesale bag.",
     description:
       "FATTOR is packed in a 65 kg trade bag for wholesale orders, with 250 g, 500 g, and 1 kg samples when a sample price is set.",
-    ...pack("/images/products/fattor/FATTOR.jpg.jpeg"),
+    ...pack("/images/products/fattor/Cutout_Fattor.png"),
     sortOrder: 6,
     ratePerKgPaise: undefined,
     bulkPackPaise: undefined,

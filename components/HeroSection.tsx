@@ -32,11 +32,11 @@ export function HeroSection() {
       {/* Subtle ambient gold glow */}
       <div className="pointer-events-none absolute -top-24 -left-24 -z-10 h-96 w-96 rounded-full bg-[#c9a24b]/10 blur-3xl" />
 
-      <div className="section-wrap relative flex min-h-[78svh] flex-col justify-between pt-14 pb-8 sm:pt-20 sm:pb-10 lg:min-h-[640px] lg:pt-24">
+      <div className="section-wrap relative flex min-h-[46svh] flex-col justify-center pt-10 pb-10 sm:min-h-[74svh] sm:justify-between sm:pt-20 sm:pb-10 lg:min-h-[640px] lg:pt-24">
         {/* Main Editorial Content */}
-        <div className="max-w-2xl py-6 lg:py-10">
+        <div className="max-w-2xl py-2 sm:py-6 lg:py-10">
           <div
-            className="animate-hero-up inline-flex items-center gap-2 rounded-full border border-[#c9a24b]/40 bg-[#1c1814]/80 px-4 py-1.5 text-xs font-semibold tracking-[0.2em] text-[#e7c97a] uppercase backdrop-blur-md"
+            className="animate-hero-up inline-flex items-center gap-2 rounded-full border border-[#c9a24b]/40 bg-[#1c1814]/80 px-3 py-1 text-[11px] font-semibold tracking-[0.18em] text-[#e7c97a] uppercase backdrop-blur-md sm:px-4 sm:py-1.5 sm:text-xs sm:tracking-[0.2em]"
             style={{ animationDelay: "60ms" }}
           >
             <span className="h-1.5 w-1.5 rounded-full bg-[#e7c97a]" />
@@ -44,7 +44,7 @@ export function HeroSection() {
           </div>
 
           <h1
-            className="animate-hero-up font-display mt-6 text-4xl leading-[1.08] font-semibold tracking-tight text-white sm:text-5xl lg:text-6xl"
+            className="animate-hero-up font-display mt-4 text-[2.1rem] leading-[1.1] font-semibold tracking-tight text-white sm:mt-6 sm:text-5xl lg:text-6xl"
             style={{ animationDelay: "160ms" }}
           >
             Kerala&apos;s Finest{" "}
@@ -55,44 +55,44 @@ export function HeroSection() {
           </h1>
 
           <p
-            className="animate-hero-up mt-5 max-w-xl text-base leading-relaxed text-white/78 sm:text-lg"
+            className="animate-hero-up mt-5 hidden max-w-xl text-base leading-relaxed text-white/78 sm:block sm:text-lg"
             style={{ animationDelay: "260ms" }}
           >
             Four decades of trusted sourcing and precision hand-sorting. Compare live daily rates across MOTI, VACHRAS, MORO, JAM, JEENI &amp; FATTOR — from curated sample pouches to 65 kg wholesale bags.
           </p>
 
           <div
-            className="animate-hero-up mt-8 flex flex-wrap items-center gap-3.5"
+            className="animate-hero-up mt-6 flex flex-wrap items-center gap-2.5 sm:mt-8 sm:gap-3.5"
             style={{ animationDelay: "360ms" }}
           >
             <Link
               href="/products"
-              className="btn btn-gold min-h-12 rounded-xl px-6 text-sm font-bold tracking-wide sm:text-[0.95rem]"
+              className="btn btn-gold min-h-11 rounded-xl px-5 text-sm font-bold tracking-wide sm:min-h-12 sm:px-6 sm:text-[0.95rem]"
             >
-              Explore Our Grades
-              <ArrowRight size={17} />
+              Explore Grades
+              <ArrowRight size={16} />
             </Link>
 
             <Link
               href="/today-rate"
-              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-white/25 bg-white/10 px-6 text-sm font-semibold text-white backdrop-blur-md transition-all duration-200 hover:border-[#e7c97a]/70 hover:bg-white/15 sm:text-[0.95rem]"
+              className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-white/25 bg-white/10 px-5 text-sm font-semibold text-white backdrop-blur-md transition-all duration-200 hover:border-[#e7c97a]/70 hover:bg-white/15 sm:min-h-12 sm:px-6 sm:text-[0.95rem]"
             >
-              <TrendingUp size={16} className="text-[#e7c97a]" />
-              Today&apos;s Live Rates
+              <TrendingUp size={15} className="text-[#e7c97a]" />
+              Live Rates
             </Link>
 
             <Link
               href="#samples"
-              className="inline-flex min-h-12 items-center gap-1.5 px-3 text-sm font-medium text-[#e7c97a] underline-offset-4 transition-colors hover:text-white hover:underline"
+              className="hidden min-h-12 items-center gap-1.5 px-3 text-sm font-medium text-[#e7c97a] underline-offset-4 transition-colors hover:text-white hover:underline sm:inline-flex"
             >
               Order Sample Pack
             </Link>
           </div>
         </div>
 
-        {/* Integrated Heritage & Trust Strip */}
+        {/* Integrated Heritage & Trust Strip (Desktop / Tablet) */}
         <div
-          className="animate-hero-up mt-8 grid grid-cols-2 gap-3 rounded-2xl border border-white/12 bg-[#161310]/80 p-4 backdrop-blur-md sm:gap-4 sm:p-5 lg:grid-cols-4"
+          className="animate-hero-up mt-8 hidden grid-cols-2 gap-3 rounded-2xl border border-white/12 bg-[#161310]/80 p-4 backdrop-blur-md sm:grid sm:gap-4 sm:p-5 lg:grid-cols-4"
           style={{ animationDelay: "460ms" }}
         >
           {highlights.map((item) => {

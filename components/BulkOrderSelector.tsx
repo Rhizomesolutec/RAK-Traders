@@ -33,8 +33,8 @@ export function BulkOrderSelector({
       />
 
       <div className="flex flex-1 flex-col p-5">
-        <div className="flex items-start justify-between gap-2">
-          <div>
+        <div className="flex items-start justify-between gap-3">
+          <div className="min-w-0">
             <p className="text-[11px] font-semibold tracking-[0.14em] text-[#9a7332] uppercase">
               {product.gradeLabel}
             </p>

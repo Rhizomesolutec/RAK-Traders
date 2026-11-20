@@ -23,8 +23,8 @@ export function ProductCard({ product }: { product: PublicProduct }) {
       />
 
       <div className="flex flex-1 flex-col p-5">
-        <div className="flex items-start justify-between gap-2">
-          <div>
+        <div className="flex items-start justify-between gap-3">
+          <div className="min-w-0">
             <p className="text-[11px] font-semibold tracking-[0.14em] text-[#9a7332] uppercase">
               {product.gradeLabel}
             </p>
@@ -76,7 +76,7 @@ export function ProductGrid({ products }: { products: PublicProduct[] }) {
     );
   }
   return (
-    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    <div className="grid grid-cols-1 items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3">
       {products.map((product) => (
         <ProductCard key={product.id} product={product} />
       ))}
