@@ -4,6 +4,7 @@ const nextConfig: NextConfig = {
   serverExternalPackages: ["mongodb", "mongoose"],
   experimental: {
     agentFeedback: true,
+    agentUpgrade: "security",
   },
   cacheComponents: true,
   partialPrefetching: true,
