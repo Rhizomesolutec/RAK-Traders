@@ -7,15 +7,15 @@ import { ArrowRight, Award, PackageCheck, ShieldCheck, Sparkles, TrendingUp } fr
 
 const slides = [
   {
-    src: "/images/hero/hero-luxury.jpg",
+    src: "/images/hero/hero-luxury.webp",
     alt: "Hand-graded arecanuts in a hammered brass bowl on rustic jute burlap",
   },
   {
-    src: "/images/hero/hero-slide-2.jpg",
+    src: "/images/hero/hero-slide-2.webp",
     alt: "Graded whole dried MOTI arecanuts overflowing from a wholesale jute trade sack",
   },
   {
-    src: "/images/hero/hero-slide-3.jpg",
+    src: "/images/hero/hero-slide-3.webp",
     alt: "Finely sliced Chips Cut and Salli Cut arecanuts in handcrafted brass and ceramic bowls",
   },
 ];

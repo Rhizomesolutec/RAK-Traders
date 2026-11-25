@@ -3,19 +3,29 @@ import { COMPANY } from "@/lib/company";
 import { findActiveProductBySlug, listProducts, listSettings, type ProductView } from "@/lib/store";
 import type { PublicProduct, SiteSettings } from "@/lib/types";
 
+function normalizeImagePath(path: string): string {
+  if (path.startsWith("/images/")) {
+    return path.replace(/(\.jpg)?\.(png|jpe?g)$/i, ".webp");
+  }
+  return path;
+}
+
 export function parseGallery(value: string | null | undefined, fallback: string[] = []): string[] {
   if (!value) return fallback;
   try {
     const parsed = JSON.parse(value) as unknown;
     if (Array.isArray(parsed)) {
-      const paths = parsed.filter((item): item is string => typeof item === "string" && item.startsWith("/"));
+      const paths = parsed
+        .filter((item): item is string => typeof item === "string" && item.startsWith("/"))
+        .map(normalizeImagePath);
       if (paths.length > 0) return paths;
     }
   } catch {
     const lines = value
       .split(/\r?\n/)
       .map((line) => line.trim())
-      .filter((line) => line.startsWith("/"));
+      .filter((line) => line.startsWith("/"))
+      .map(normalizeImagePath);
     if (lines.length > 0) return lines;
   }
   return fallback;
@@ -47,7 +57,7 @@ export function toPublicProduct(product: ProductView): PublicProduct {
   const savedPack = rate?.bulkPackPaise ?? demo?.pack ?? null;
   const missingBulk = rate?.ratePerKgPaise == null || rate?.bulkPackPaise == null;
   const published = missingBulk ? demo != null && savedRate != null && savedPack != null : Boolean(rate?.published) && savedRate != null && savedPack != null;
-  const pack = product.packImagePath || product.imagePath || COMPANY.packImage;
+  const pack = normalizeImagePath(product.packImagePath || product.imagePath || COMPANY.packImage);
   return {
     id: product.id,
     slug: product.slug,

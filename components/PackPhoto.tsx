@@ -1,12 +1,12 @@
 import Image from "next/image";
 
 const cutPhotos: Record<string, string> = {
-  moti: "/images/products/moti/cut.jpg",
-  vachras: "/images/products/vachras/cut.jpg",
-  moro: "/images/products/mora/cut.jpg",
-  jam: "/images/products/jam/cut.jpg",
-  jeeni: "/images/products/jeeni/cut.jpg",
-  fattor: "/images/products/fattor/cut.jpg",
+  moti: "/images/products/moti/cut.webp",
+  vachras: "/images/products/vachras/cut.webp",
+  moro: "/images/products/mora/cut.webp",
+  jam: "/images/products/jam/cut.webp",
+  jeeni: "/images/products/jeeni/cut.webp",
+  fattor: "/images/products/fattor/cut.webp",
 };
 
 export function samplePhoto(slug: string) {

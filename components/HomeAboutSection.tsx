@@ -16,7 +16,7 @@ export function HomeAboutSection() {
         <div className="relative lg:col-span-6">
           <div className="relative aspect-[4/3] overflow-hidden rounded-3xl border border-[#e6dfd5] shadow-[0_20px_50px_-18px_rgba(28,25,23,0.18)]">
             <Image
-              src="/images/about/our-legacy.jpg"
+              src="/images/about/our-legacy.webp"
               alt="Traditional Malabar arecanut grading baskets, jute wholesale sacks, and brass balance scale"
               fill
               unoptimized

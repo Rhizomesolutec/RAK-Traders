@@ -16,7 +16,7 @@ export function Logo({
       className={`inline-flex shrink-0 items-center transition-transform duration-300 hover:scale-105 ${className}`}
     >
       <Image
-        src="/images/logo/logo-transparent.png"
+        src="/images/logo/logo-transparent.webp"
         alt="RAK TRADERS"
         width={size}
         height={size}

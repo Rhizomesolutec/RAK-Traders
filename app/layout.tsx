@@ -22,10 +22,10 @@ export const metadata: Metadata = {
     type: "website",
     siteName: "RAK TRADERS",
     ...(siteUrl
-      ? { images: [{ url: "/images/hero/hero-luxury.jpg", alt: "RAK TRADERS premium graded arecanuts" }] }
+      ? { images: [{ url: "/images/hero/hero-luxury.webp", alt: "RAK TRADERS premium graded arecanuts" }] }
       : {}),
   },
-  icons: { icon: "/images/logo/logo-transparent.png" },
+  icons: { icon: "/images/logo/logo-transparent.webp" },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

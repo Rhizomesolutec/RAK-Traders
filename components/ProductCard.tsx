@@ -8,7 +8,7 @@ import { PackPhoto } from "@/components/PackPhoto";
 import { formatInr } from "@/lib/money";
 import type { PublicProduct } from "@/lib/types";
 
-const closedPack = "/images/products/rak-65kg-pack.jpg";
+const closedPack = "/images/products/rak-65kg-pack.webp";
 
 export function ProductCard({ product }: { product: PublicProduct }) {
   const image = product.packImagePath || closedPack;

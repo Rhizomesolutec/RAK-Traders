@@ -28,7 +28,7 @@ const products = [
     nutSize: "Large whole nuts.",
     description:
       "MOTI is the large arecanut grade. It is packed in a 65 kg trade bag for wholesale orders, with 250 g, 500 g, and 1 kg samples when a sample price is set.",
-    ...pack("/images/products/moti/Cutout_Moti.png"),
+    ...pack("/images/products/moti/Cutout_Moti.webp"),
     sortOrder: 1,
     ratePerKgPaise: 63900 as number | undefined,
     bulkPackPaise: 4153500 as number | undefined,
@@ -40,7 +40,7 @@ const products = [
     nutSize: "Medium whole nuts.",
     description:
       "VACHRAS is the medium arecanut grade. It is packed in a 65 kg trade bag for wholesale orders, with 250 g, 500 g, and 1 kg samples when a sample price is set.",
-    ...pack("/images/products/vachras/Cutout_Vachras.png"),
+    ...pack("/images/products/vachras/Cutout_Vachras.webp"),
     sortOrder: 2,
     ratePerKgPaise: 59900 as number | undefined,
     bulkPackPaise: 3893500 as number | undefined,
@@ -52,7 +52,7 @@ const products = [
     nutSize: "Jumbo whole nuts.",
     description:
       "MORO is the jumbo arecanut grade. It is packed in a 65 kg trade bag for wholesale orders, with 250 g, 500 g, and 1 kg samples when a sample price is set.",
-    ...pack("/images/products/mora/Cutout_Mora.png"),
+    ...pack("/images/products/mora/Cutout_Mora.webp"),
     sortOrder: 3,
     ratePerKgPaise: 65900 as number | undefined,
     bulkPackPaise: 4283500 as number | undefined,
@@ -64,7 +64,7 @@ const products = [
     nutSize: "65 kg wholesale bag.",
     description:
       "JAM is packed in a 65 kg trade bag for wholesale orders, with 250 g, 500 g, and 1 kg samples when a sample price is set.",
-    ...pack("/images/products/jam/Cutout_Jam.png"),
+    ...pack("/images/products/jam/Cutout_Jam.webp"),
     sortOrder: 4,
     ratePerKgPaise: undefined,
     bulkPackPaise: undefined,
@@ -76,7 +76,7 @@ const products = [
     nutSize: "65 kg wholesale bag.",
     description:
       "JEENI is packed in a 65 kg trade bag for wholesale orders, with 250 g, 500 g, and 1 kg samples when a sample price is set.",
-    ...pack("/images/products/jeeni/Cutout_Jeeni.png"),
+    ...pack("/images/products/jeeni/Cutout_Jeeni.webp"),
     sortOrder: 5,
     ratePerKgPaise: undefined,
     bulkPackPaise: undefined,
@@ -88,7 +88,7 @@ const products = [
     nutSize: "65 kg wholesale bag.",
     description:
       "FATTOR is packed in a 65 kg trade bag for wholesale orders, with 250 g, 500 g, and 1 kg samples when a sample price is set.",
-    ...pack("/images/products/fattor/Cutout_Fattor.png"),
+    ...pack("/images/products/fattor/Cutout_Fattor.webp"),
     sortOrder: 6,
     ratePerKgPaise: undefined,
     bulkPackPaise: undefined,

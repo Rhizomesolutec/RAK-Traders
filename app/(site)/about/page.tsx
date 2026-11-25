@@ -125,7 +125,7 @@ export default function AboutPage() {
           <div className="lg:col-span-5">
             <div className="relative aspect-[4/3] overflow-hidden rounded-3xl border border-white/15 shadow-2xl">
               <Image
-                src="/images/hero/hero-luxury.jpg"
+                src="/images/hero/hero-luxury.webp"
                 alt="Hand-graded arecanuts from RAK TRADERS INTERNATIONAL"
                 fill
                 priority
@@ -174,7 +174,7 @@ export default function AboutPage() {
             <div className="lg:col-span-6">
               <div className="relative aspect-[4/3] overflow-hidden rounded-3xl border border-[#e6dfd5] shadow-[0_18px_45px_-16px_rgba(28,25,23,0.16)]">
                 <Image
-                  src="/images/about/our-legacy.jpg"
+                  src="/images/about/our-legacy.webp"
                   alt="Traditional Mangalore and Kerala arecanut warehouse with woven grading baskets and brass balance scale"
                   fill
                   unoptimized

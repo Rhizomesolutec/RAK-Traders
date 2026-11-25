@@ -86,7 +86,7 @@ export async function saveProduct(_prev: FormState, formData: FormData): Promise
       return { error: "Name, slug, grade, and description are required." };
     }
     const uploaded = await saveUpload(formData.get("image"));
-    const picture = uploaded || imagePath || packImagePath || "/images/products/moti/Cutout_Moti.png";
+    const picture = uploaded || imagePath || packImagePath || "/images/products/moti/Cutout_Moti.webp";
     const data = {
       name,
       slug,

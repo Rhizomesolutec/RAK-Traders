@@ -12,7 +12,7 @@ export default function AdminLoginPage() {
       <div className="grid w-full max-w-4xl overflow-hidden rounded-xl border border-[#e4e7ec] bg-white shadow-[0_16px_40px_rgba(31,41,51,0.12)] md:grid-cols-[0.9fr_1.1fr]">
         <div className="relative flex min-h-52 flex-col justify-end overflow-hidden bg-[#1f2933] px-6 py-7 text-white md:min-h-[28rem] md:px-8 md:py-10">
           <Image
-            src="/images/products/moti/Cutout_Moti.png"
+            src="/images/products/moti/Cutout_Moti.webp"
             alt=""
             fill
             priority

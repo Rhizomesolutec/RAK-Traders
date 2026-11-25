@@ -8,39 +8,39 @@ export const COMPANY = {
     "Ponnani, Malappuram, Kerala, India.",
   ],
   bulkKg: 65,
-  packImage: "/images/products/moti/Cutout_Moti.png",
-  samplePackImage: "/images/sample/MOTI.png",
+  packImage: "/images/products/moti/Cutout_Moti.webp",
+  samplePackImage: "/images/sample/MOTI.webp",
   samplePouchImages: [
-    "/images/sample/MOTI.png",
-    "/images/sample/Vachras.png",
-    "/images/sample/MORA.png",
-    "/images/sample/JAM.png",
-    "/images/sample/JEENI.png",
+    "/images/sample/MOTI.webp",
+    "/images/sample/Vachras.webp",
+    "/images/sample/MORA.webp",
+    "/images/sample/JAM.webp",
+    "/images/sample/JEENI.webp",
   ],
   bulkCutPacks: [
     {
       name: "Chips Cut",
       badge: "No. 1 Grade",
       subtitle: "Mangalore Quality · Bulk & Custom Packs",
-      image: "/images/sample/CHIPS CUT MOCKUP.png",
+      image: "/images/sample/CHIPS CUT MOCKUP.webp",
     },
     {
       name: "Salli Cut",
       badge: "No. 1 Grade",
       subtitle: "Mangalore Quality · Bulk & Custom Packs",
-      image: "/images/sample/SALLI CUT MOCKUP 2.png",
+      image: "/images/sample/SALLI CUT MOCKUP 2.webp",
     },
   ],
   sampleWeights: [250, 500, 1000] as const,
 } as const;
 
 const SAMPLE_CREAM_PACKS: Record<string, string> = {
-  moti: "/images/sample/MOTI.png",
-  vachras: "/images/sample/Vachras.png",
-  moro: "/images/sample/MORA.png",
-  mora: "/images/sample/MORA.png",
-  jam: "/images/sample/JAM.png",
-  jeeni: "/images/sample/JEENI.png",
+  moti: "/images/sample/MOTI.webp",
+  vachras: "/images/sample/Vachras.webp",
+  moro: "/images/sample/MORA.webp",
+  mora: "/images/sample/MORA.webp",
+  jam: "/images/sample/JAM.webp",
+  jeeni: "/images/sample/JEENI.webp",
 };
 
 export function samplePackImageFor(slug: string): string {
