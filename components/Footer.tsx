@@ -8,6 +8,7 @@ const links = [
   { href: "/products", label: "Our Grades" },
   { href: "/today-rate", label: "Today's Rates" },
   { href: "/sample-orders", label: "Sample Orders" },
+  { href: "/about", label: "About Us" },
   { href: "/track-order", label: "Track Order" },
   { href: "/contact", label: "Contact Us" },
 ];
@@ -19,11 +20,11 @@ export function Footer({ whatsappNumber, year }: { whatsappNumber: string; year:
         <div className="md:col-span-5">
           <Logo size={88} />
           <p className="mt-5 max-w-sm text-sm leading-relaxed text-white/65">
-            {COMPANY.legalName} — Trusted wholesale supplier of hand-graded Kerala arecanut since 1980. Supplying 65 kg trade bags and curated sample pouches across India.
+            {COMPANY.legalName} — Trusted wholesale supplier of hand-graded Mangalore &amp; Kerala arecanut since 1980. Supplying 65 kg trade bags and curated sample pouches across India.
           </p>
           <div className="mt-5 inline-flex items-center gap-2 rounded-full border border-[#c9a24b]/30 bg-[#c9a24b]/10 px-3.5 py-1.5 text-xs font-medium text-[#e7c97a]">
             <ShieldCheck size={14} />
-            Direct Ponnani Wholesale House
+            Direct Mangalore &amp; Kerala Wholesale House
           </div>
         </div>
 
@@ -68,7 +69,7 @@ export function Footer({ whatsappNumber, year }: { whatsappNumber: string; year:
       <div className="border-t border-white/10">
         <div className="section-wrap flex flex-col items-center justify-between gap-3 py-5 text-xs text-white/50 sm:flex-row">
           <p>© {year} {COMPANY.legalName}. All rights reserved.</p>
-          <p>Est. 1980 · Ponnani, Kerala, India</p>
+          <p>Est. 1980 · Mangalore &amp; Kerala, India</p>
         </div>
       </div>
     </footer>

@@ -407,8 +407,14 @@ li {
   scrollbar-width: none;
 }
 
-.card-slider::-webkit-scrollbar {
+.card-slider::-webkit-scrollbar,
+.mobile-product-row::-webkit-scrollbar {
   display: none;
+}
+
+.mobile-product-row {
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
 }
 
 .card-slider > * {

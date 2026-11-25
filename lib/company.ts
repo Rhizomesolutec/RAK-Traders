@@ -9,10 +9,43 @@ export const COMPANY = {
   ],
   bulkKg: 65,
   packImage: "/images/products/moti/Cutout_Moti.png",
-  samplePackImage: "/images/sample/CHIPS CUT MOCKUP.png",
-  samplePouchImages: ["/images/sample/CHIPS CUT MOCKUP.png", "/images/sample/SALLI CUT MOCKUP 2.png"],
+  samplePackImage: "/images/sample/MOTI.png",
+  samplePouchImages: [
+    "/images/sample/MOTI.png",
+    "/images/sample/Vachras.png",
+    "/images/sample/MORA.png",
+    "/images/sample/JAM.png",
+    "/images/sample/JEENI.png",
+  ],
+  bulkCutPacks: [
+    {
+      name: "Chips Cut",
+      badge: "No. 1 Grade",
+      subtitle: "Mangalore Quality · Bulk & Custom Packs",
+      image: "/images/sample/CHIPS CUT MOCKUP.png",
+    },
+    {
+      name: "Salli Cut",
+      badge: "No. 1 Grade",
+      subtitle: "Mangalore Quality · Bulk & Custom Packs",
+      image: "/images/sample/SALLI CUT MOCKUP 2.png",
+    },
+  ],
   sampleWeights: [250, 500, 1000] as const,
 } as const;
+
+const SAMPLE_CREAM_PACKS: Record<string, string> = {
+  moti: "/images/sample/MOTI.png",
+  vachras: "/images/sample/Vachras.png",
+  moro: "/images/sample/MORA.png",
+  mora: "/images/sample/MORA.png",
+  jam: "/images/sample/JAM.png",
+  jeeni: "/images/sample/JEENI.png",
+};
+
+export function samplePackImageFor(slug: string): string {
+  return SAMPLE_CREAM_PACKS[slug.toLowerCase()] ?? COMPANY.samplePackImage;
+}
 
 export const ORDER_STATUSES = [
   "RECEIVED",

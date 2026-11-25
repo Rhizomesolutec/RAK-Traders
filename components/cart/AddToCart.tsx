@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useCart } from "@/components/cart/CartProvider";
-import { COMPANY } from "@/lib/company";
+import { samplePackImageFor } from "@/lib/company";
 import type { PublicProduct, SampleWeight } from "@/lib/types";
 
 export function AddSampleButton({
@@ -27,7 +27,7 @@ export function AddSampleButton({
           slug: product.slug,
           name: product.name,
           gradeLabel: product.gradeLabel,
-          imagePath: COMPANY.samplePouchImages[grams === 500 ? 1 : 0],
+          imagePath: samplePackImageFor(product.slug),
           orderType: "SAMPLE",
           sampleWeightG: grams,
           quantity: 1,

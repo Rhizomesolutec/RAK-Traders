@@ -73,7 +73,7 @@ export function DeliveryChecker() {
             </div>
             <div className="flex items-center gap-2.5">
               <MapPin size={15} className="shrink-0 text-[#e7c97a]" />
-              <span>Dispatched directly from Ponnani, Malappuram, Kerala</span>
+              <span>Dispatched directly from Mangalore &amp; Kerala</span>
             </div>
           </div>
         </div>
