@@ -28,14 +28,9 @@ function HeaderFallback() {
             className="flex min-w-0 items-center gap-2.5 lg:hidden"
             aria-label="RAK TRADERS INTERNATIONAL"
           >
-            <span className="h-7 w-px shrink-0 bg-gradient-to-b from-transparent via-[#c9a24b]/60 to-transparent" />
-            <span className="min-w-0 leading-none">
-              <span className="font-display block truncate text-[0.82rem] font-semibold tracking-[0.26em] text-[#f3d78e] uppercase sm:text-sm">
-                INTERNATIONAL
-              </span>
-              <span className="mt-1 block truncate text-[9px] font-medium tracking-[0.2em] text-white/55 uppercase">
-                Est. 1980 · Mangalore &amp; Kerala
-              </span>
+            <span className="h-5 w-px shrink-0 bg-gradient-to-b from-transparent via-[#c9a24b]/65 to-transparent" />
+            <span className="font-display truncate text-[0.85rem] leading-none font-semibold tracking-[0.24em] text-[#f3d78e] uppercase sm:text-[0.95rem]">
+              INTERNATIONAL
             </span>
           </Link>
         </div>
@@ -107,14 +102,9 @@ function HeaderContent() {
             className="flex min-w-0 items-center gap-2.5 lg:hidden"
             aria-label="RAK TRADERS INTERNATIONAL"
           >
-            <span className="h-7 w-px shrink-0 bg-gradient-to-b from-transparent via-[#c9a24b]/60 to-transparent" />
-            <span className="min-w-0 leading-none">
-              <span className="font-display block truncate text-[0.82rem] font-semibold tracking-[0.26em] text-[#f3d78e] uppercase sm:text-sm">
-                INTERNATIONAL
-              </span>
-              <span className="mt-1 block truncate text-[9px] font-medium tracking-[0.2em] text-white/55 uppercase">
-                Est. 1980 · Mangalore &amp; Kerala
-              </span>
+            <span className="h-5 w-px shrink-0 bg-gradient-to-b from-transparent via-[#c9a24b]/65 to-transparent" />
+            <span className="font-display truncate text-[0.85rem] leading-none font-semibold tracking-[0.24em] text-[#f3d78e] uppercase sm:text-[0.95rem]">
+              INTERNATIONAL
             </span>
           </Link>
         </div>
